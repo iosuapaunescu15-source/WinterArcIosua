@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Iosua — Winter Arc & Trainingsplan</title>
+  <style>
+    /* Grundstil */
+    :root {
+      --accent: #1abc9c;
+      --dark: #34495e;
+      --bg: #f4f7fb;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family: Arial, Helvetica, sans-serif;
+      margin:0;
+      background: linear-gradient(135deg,#dfe9f3 0%,#ffffff 100%);
+      color:#222;
+      min-height:100vh;
+    }
+
+    /* HOMEPAGE */
+    #home{
+      height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      flex-direction:column;
+      background:url('https://images.unsplash.com/photo-1608889175113-28e38a1e8c5b?auto=format&fit=crop&w=1600&q=60') center/cover no-repeat;
+      color:white;
+    }
+    #home h1{
+      font-size:3rem;
+      margin:0;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    }
+    .home-buttons{
+      margin-top:28px;
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .home-buttons button{
+      background:var(--accent);
+      color:white;
+      border:none;
+      padding:14px 28px;
+      border-radius:10px;
+      font-size:1.05rem;
+      cursor:pointer;
+      box-shadow:0 6px 18px rgba(0,0,0,0.2);
+      transition:transform .15s ease,background .15s ease;
+    }
+    .home-buttons button:hover{ transform:translateY(-3px); background:#16a085;}
+
+    /* Sektionen */
+    .section{
+      display:none;
+      padding:26px;
+      min-height:100vh;
+      background:var(--bg);
+    }
+    .visible{ display:block; }
+
+    h1.section-title{ text-align:center; color:var(--dark); margin-top:10px; margin-bottom:18px; }
+
+    /* Top-Buttons innerhalb Sektion */
+    .top-switch{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      margin-bottom:18px;
+      flex-wrap:wrap;
+    }
+    .top-switch button{
+      background:var(--dark);
+      color:white;
+      border:none;
+      padding:10px 16px;
+      border-radius:8px;
+      cursor:pointer;
+      transition:background .12s;
+    }
+    .top-switch button:hover{ background:#2c3e50; }
+    .top-switch .active{ background:var(--accent); }
+
+    /* Day buttons */
+    .day-buttons{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      margin-bottom:20px;
+      flex-wrap:wrap;
+    }
+    .day-buttons button{
+      background:var(--dark);
+      color:white;
+      border:none;
+      padding:8px 14px;
+      border-radius:8px;
+      cursor:pointer;
+      font-size:0.95rem;
+    }
+    .day-buttons button.active{ background:var(--accent); }
+
+    /* Tabellen */
+    .table-wrap{ overflow-x:auto; }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin:0 auto 28px;
+      background:white;
+      box-shadow:0 6px 18px rgba(0,0,0,0.06);
+      display:none;
+      min-width:320px;
+    }
+    th,td{ padding:12px; border:1px solid #e6e6e6; text-align:left; }
+    th{ background:var(--dark); color:white; }
+    tr:nth-child(even){ background:#fafafa; }
+    .day{ background:var(--dark); color:white; text-align:center; font-weight:700; font-size:1.05rem; }
+
+    /* aktive Zeitzeile */
+    tr.active-time{ background:#d1f5d3 !important; font-weight:700; }
+
+    /* Modal */
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.55);
+      z-index:999;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+    .modal .card{
+      background:white;
+      border-radius:10px;
+      padding:18px;
+      max-width:520px;
+      width:100%;
+      box-shadow:0 8px 30px rgba(0,0,0,0.2);
+    }
+    .close-btn{ float:right; cursor:pointer; font-size:20px; color:#555; }
+
+    /* Trainings Tabelle */
+    #training table{ display:table; }
+    #training td{ vertical-align:top; }
+
+    /* Responsiv */
+    @media (max-width:768px){
+      #home h1{ font-size:2rem; padding:0 20px; }
+      .home-buttons button{ padding:10px 18px; font-size:1rem; }
+      th,td{ padding:9px; font-size:14px; }
+      .day-buttons button{ padding:7px 10px; font-size:13px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HOMEPAGE -->
+  <div id="home">
+    <h1>Willkommen, Iosua ❄️</h1>
+    <div class="home-buttons">
+      <button id="btn-plan">Winter Arc Plan</button>
+      <button id="btn-training">Trainingsplan</button>
+    </div>
+  </div>
+
+  <!-- WINTER ARC PLAN (Sektion) -->
+  <section id="plan" class="section">
+    <h1 class="section-title">Winter Arc Plan</h1>
+
+    <div class="day-buttons" role="tablist" aria-label="Wochentage">
+      <button data-day="montag">Montag</button>
+      <button data-day="dienstag">Dienstag</button>
+      <button data-day="mittwoch">Mittwoch</button>
+      <button data-day="donnerstag">Donnerstag</button>
+      <button data-day="freitag">Freitag</button>
+    </div>
+
+    <div class="table-wrap">
+      <!-- MONTAG -->
+      <table id="montag" aria-hidden="true">
+        <tr><td colspan="2" class="day">Montag</td></tr>
+        <tr><th>Zeit</th><th>Aktivität</th></tr>
+        <tr><td>06:00</td><td>Aufstehen</td></tr>
+        <tr><td>06:00 - 06:50</td><td><span class="routine-link" data-routine="morning">Morgenroutine</span></td></tr>
+        <tr><td>06:50 - 14:30</td><td>Schule</td></tr>
+        <tr><td>14:30 - 15:30</td><td>Essen / Relax</td></tr>
+        <tr><td>15:30 - 16:00</td><td>Hausübungen</td></tr>
+        <tr><td>16:00 - 17:30</td><td>Workout (Spielplatz)</td></tr>
+        <tr><td>17:30 - 18:00</td><td>Relax / Business / Darius telefonieren</td></tr>
+        <tr><td>18:30 - 21:00</td><td>Kirche</td></tr>
+        <tr><td>21:00</td><td><span class="routine-link" data-routine="evening">Abendroutine</span></td></tr>
+        <tr><td>22:00</td><td>Schlafen</td></tr>
+      </table>
+
+      <!-- DIENSTAG -->
+      <table id="dienstag" aria-hidden="true">
+        <tr><td colspan="2" class="day">Dienstag</td></tr>
+        <tr><th>Zeit</th><th>Aktivität</th></tr>
+        <tr><td>06:00</td><td>Aufstehen</td></tr>
+        <tr><td>06:00 - 06:50</td><td><span class="routine-link" data-routine="morning">Morgenroutine</span></td></tr>
+        <tr><td>06:50 - 17:00</td><td>Schule</td></tr>
+        <tr><td>17:00 - 18:00</td><td>Essen / Relax</td></tr>
+        <tr><td>18:00 - 18:30</td><td>Lernen</td></tr>
+        <tr><td>18:30 - 19:30</td><td>Workout</td></tr>
+        <tr><td>19:30 - 20:00</td><td><span class="routine-link" data-routine="dienstag">Dienstag Routine</span></td></tr>
+        <tr><td>20:00</td><td><span class="routine-link" data-routine="evening">Abendroutine</span></td></tr>
+        <tr><td>22:00</td><td>Schlafen</td></tr>
+      </table>
+
+      <!-- MITTWOCH -->
+      <table id="mittwoch" aria-hidden="true">
+        <tr><td colspan="2" class="day">Mittwoch</td></tr>
+        <tr><th>Zeit</th><th>Aktivität</th></tr>
+        <tr><td>06:50</td><td>Aufstehen</td></tr>
+        <tr><td>06:50 - 07:45</td><td><span class="routine-link" data-routine="morning">Morgenroutine</span></td></tr>
+        <tr><td>07:45 - 13:30</td><td>Schule</td></tr>
+        <tr><td>13:30 - 14:00</td><td>Essen / Relax</td></tr>
+        <tr><td>14:00 - 14:30</td><td>Lernen / Relax</td></tr>
+        <tr><td>14:30 - 16:00</td><td>Workout (Sportplatz)</td></tr>
+        <tr><td>16:00 - 18:30</td><td>Essen / Frei / Darius telefonieren</td></tr>
+        <tr><td>18:30 - 21:00</td><td>Kirche</td></tr>
+        <tr><td>21:00</td><td><span class="routine-link" data-routine="evening">Abendroutine</span></td></tr>
+        <tr><td>22:00</td><td>Schlafen</td></tr>
+      </table>
+
+      <!-- DONNERSTAG -->
+      <table id="donnerstag" aria-hidden="true">
+        <tr><td colspan="2" class="day">Donnerstag</td></tr>
+        <tr><th>Zeit</th><th>Aktivität</th></tr>
+        <tr><td>06:00 / 08:00</td><td>Aufstehen</td></tr>
+        <tr><td>06:50 / 09:15</td><td><span class="routine-link" data-routine="morning">Morgenroutine</span></td></tr>
+        <tr><td>06:50 / 09:15 - 17:00</td><td>Schule</td></tr>
+        <tr><td>17:00 - 17:30</td><td>Relax</td></tr>
+        <tr><td>17:30 - 18:00</td><td>Essen</td></tr>
+        <tr><td>18:00 - 18:30</td><td>Lernen / Relax</td></tr>
+        <tr><td>18:30 - 19:30</td><td>Workout</td></tr>
+        <tr><td>19:30 - 20:00</td><td>Darius telefonieren / Relax</td></tr>
+        <tr><td>20:00</td><td><span class="routine-link" data-routine="evening">Abendroutine</span></td></tr>
+        <tr><td>22:00</td><td>Schlafen</td></tr>
+      </table>
+
+      <!-- FREITAG -->
+      <table id="freitag" aria-hidden="true">
+        <tr><td colspan="2" class="day">Freitag (Restday)</td></tr>
+        <tr><th>Zeit</th><th>Aktivität</th></tr>
+        <tr><td>06:00</td><td>Aufstehen</td></tr>
+        <tr><td>06:00 - 06:50</td><td><span class="routine-link" data-routine="morning">Morgenroutine</span></td></tr>
+        <tr><td>06:50 - 17:00</td><td>Schule</td></tr>
+        <tr><td>17:00 - 17:15</td><td>Vorbereiten ADO</td></tr>
+        <tr><td>17:15 - 22:00</td><td>Kirche</td></tr>
+        <tr><td>22:00</td><td><span class="routine-link" data-routine="evening">Abendroutine</span></td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- TRAINING (Sektion) -->
+  <section id="training" class="section">
+    <h1 class="section-title">Trainingsplan — Zuhause (4 Tage, Freitag Rest)</h1>
+    <div class="table-wrap">
+      <table aria-hidden="false">
+        <tr><th>Tag</th><th>Training (Übungen, Sätze x WH)</th></tr>
+        <tr><td>Montag — Push & Schultern</td>
+            <td>
+              Aufwärmen 5–8 min (Seilspringen/leicht joggen)<br>
+              Liegestütze — 4 x 10–15<br>
+              Dips zwischen Stühlen — 3 x 8–12<br>
+              Hantel Schulterdrücken (stehend) — 3 x 8–12<br>
+              Pike Push-ups — 3 x 8–12<br>
+              Plank — 3 x 45–60s
+            </td></tr>
+
+        <tr><td>Dienstag — Beine & Core</td>
+            <td>
+              Aufwärmen 5–8 min<br>
+              Kniebeugen (mit Hanteln / Goblet) — 4 x 12–20<br>
+              Ausfallschritte (gehend oder statisch) — 3 x 10–12 / Bein<br>
+              Rumänisches Kreuzheben mit Hanteln (leichtes Gewicht) — 3 x 10–12<br>
+              Wadenheben (einbeinig mit Hantel) — 4 x 15–20<br>
+              Bauch-Crunches / Leg Raises — 3 x 15–20
+            </td></tr>
+
+        <tr><td>Mittwoch — Pull & Bizeps</td>
+            <td>
+              Aufwärmen 5–8 min<br>
+              Klimmzüge (falls möglich) oder inverted rows / Handtuch-rows — 4 x 6–12<br>
+              Einarmiges Hantelrudern — 3 x 8–12 / Seite<br>
+              Hantel-Bizepscurls — 3 x 10–15<br>
+              Face Pulls mit Band (oder Rear Delt Raises) — 3 x 12–15<br>
+              Seitstütz — 3 x 30–45s / Seite
+            </td></tr>
+
+        <tr><td>Donnerstag — Ganzkörper & Kondition (Zirkel)</td>
+            <td>
+              3 Runden, 60–90s Pause zwischen den Runden:<br>
+              1) Burpees — 12–15<br>
+              2) Jump Squats — 15–20<br>
+              3) Liegestütze — 12–15<br>
+              4) Hantel-Swings (oder Romanian Deadlift) — 15<br>
+              5) Sit-ups — 20
+            </td></tr>
+
+        <tr><td>Freitag — Restday</td>
+            <td>Leichtes Stretching / Mobility 15–25min, Spaziergang, Regeneration</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- Modal für Routinen -->
+  <div id="routineModal" class="modal" aria-hidden="true">
+    <div class="card">
+      <span class="close-btn" id="modalClose">&times;</span>
+      <h2 id="routineTitle"></h2>
+      <ul id="routineList"></ul>
+    </div>
+  </div>
+
+  <script>
+    // DOM-Elemente
+    const home = document.getElementById('home');
+    const plan = document.getElementById('plan');
+    const training = document.getElementById('training');
+    const btnPlan = document.getElementById('btn-plan');
+    const btnTraining = document.getElementById('btn-training');
+
+    // Routinen
+    const routines = {
+      morning: {
+        title: 'Morgenroutine',
+        items: [
+          '1 Stunde bevor Bus kommt aufstehen',
+          '50 Liegestütze (oder 3 Sätze nach Möglichkeit)',
+          'Schultasche vorbereiten',
+          'Zähne putzen',
+          'Essen (Kakao jeden Früh)',
+          'Haare machen',
+          'Bett machen',
+          'Beten + Bibel lesen'
+        ]
+      },
+      evening: {
+        title: 'Abendroutine',
+        items: [
+          'Creme benutzen',
+          'Zähne putzen',
+          'Outfit vorbereiten',
+          'mind. 8 Stunden Schlaf',
+          'Creatin nehmen',
+          'Schultasche vorbereiten'
+        ]
+      },
+      dienstag: {
+        title: 'Dienstag Routine',
+        items: [
+          'Bettwäsche wechseln 1x in 2 Wochen',
+          'Zimmer putzen',
+          'Haare schneiden überall jede 2 Wochen',
+          'Nägel schneiden',
+          'Haine murdare la spălat'
+        ]
+      }
+    };
+
+    // Navigation von Homepage zu Sektionen
+    btnPlan.addEventListener('click', ()=> openSection('plan'));
+    btnTraining.addEventListener('click', ()=> openSection('training'));
+
+    function openSection(id){
+      home.style.display = 'none';
+      plan.classList.remove('visible');
+      training.classList.remove('visible');
+      if(id === 'plan'){
+        plan.classList.add('visible');
+        // beim Öffnen: wähle automatisch heutigen Tag (Mo-Fr) oder Montag bei WE
+        const days = ['sonntag','montag','dienstag','mittwoch','donnerstag','freitag','samstag'];
+        const today = days[new Date().getDay()];
+        const choose = ['montag','dienstag','mittwoch','donnerstag','freitag'].includes(today) ? today : 'montag';
+        showDay(choose);
+      } else {
+        training.classList.add('visible');
+      }
+    }
+
+    // Day-Buttons click handler (delegation)
+    document.querySelectorAll('.day-buttons button').forEach(btn=>{
+      btn.addEventListener('click', ()=> {
+        showDay(btn.dataset.day);
+      });
+    });
+
+    function showDay(dayId){
+      // alle plan-tabellen ausblenden
+      document.querySelectorAll('#plan table').forEach(t => { t.style.display = 'none'; t.setAttribute('aria-hidden','true'); });
+      // alle day-buttons reset
+      document.querySelectorAll('.day-buttons button').forEach(b => b.classList.remove('active'));
+      // zeige die gewünschte tabelle
+      const table = document.getElementById(dayId);
+      if(table){ table.style.display = 'table'; table.setAttribute('aria-hidden','false'); }
+      // markiere passenden button
+      const btn = document.querySelector(`.day-buttons button[data-day="${dayId}"]`);
+      if(btn) btn.classList.add('active');
+      // Highlight Zeit in dieser Tabelle
+      highlightCurrentTime(dayId);
+    }
+
+    // Routinen modal
+    const modal = document.getElementById('routineModal');
+    const modalTitle = document.getElementById('routineTitle');
+    const modalList = document.getElementById('routineList');
+    const modalClose = document.getElementById('modalClose');
+
+    document.querySelectorAll('.routine-link').forEach(el=>{
+      el.addEventListener('click', (e)=>{
+        const key = e.currentTarget.dataset.routine;
+        if(!routines[key]) return;
+        modalTitle.textContent = routines[key].title;
+        modalList.innerHTML = routines[key].items.map(i=>`<li>${i}</li>`).join('');
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden','false');
+      });
+    });
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e)=> { if(e.target === modal) closeModal(); });
+    function closeModal(){ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); }
+
+    // Zeit-Highlighting (funktioniert für alle Plan-Tabellen)
+    function highlightCurrentTime(dayId){
+      const now = new Date();
+      const currentMinutes = now.getHours()*60 + now.getMinutes();
+
+      // Entferne aktive Klasse aus allen Zeilen der ausgewählten Tabelle
+      const rows = document.querySelectorAll(`#${dayId} tr`);
+      rows.forEach(r => r.classList.remove('active-time'));
+
+      rows.forEach(r=>{
+        const cell = r.cells[0];
+        if(!cell) return;
+        const text = cell.textContent.trim();
+        // match "HH:MM" or "HH:MM - HH:MM" or "HH:MM / HH:MM" (robust)
+        const m = text.match(/(\d{1,2}):(\d{2})(?:\s*[-\/]\s*(\d{1,2}):(\d{2}))?/);
+        if(!m) return;
+        const sh = parseInt(m[1],10), sm = parseInt(m[2],10);
+        const start = sh*60 + sm;
+        let end;
+        if(m[3]){
+          end = parseInt(m[3],10)*60 + parseInt(m[4],10);
+        } else {
+          end = start + 30; // Default 30min wenn nur eine Zeit steht
+        }
+        if(currentMinutes >= start && currentMinutes < end){
+          r.classList.add('active-time');
+        }
+      });
+    }
+
+    // Aktualisiere alle 60s die Hervorhebung (nur wenn Plan sichtbar & ein Tag aktiv)
+    setInterval(()=>{
+      if(plan.classList.contains('visible')){
+        const active = document.querySelector('.day-buttons button.active');
+        if(active) highlightCurrentTime(active.dataset.day);
+      }
+    }, 60_000);
+
+    // Sicherheit: falls jemand direkt die Seite öffnet (nicht von Home), zeig Home
+    // (Kein automatisches Öffnen)
+    // (Optional: du könntest direkt openSection('plan') aufrufen)
+
+    // Accessibility / initial: zeige Home (default)
+    // (Wenn du willst, dass Plan direkt beim Laden gezeigt wird, ruf openSection('plan') hier auf)
+  </script>
+</body>
+</html>
