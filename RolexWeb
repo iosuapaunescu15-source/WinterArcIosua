@@ -118,30 +118,79 @@
   .hero-image img{ display:block; width:100%; height:100%; object-fit:cover; max-height:420px; }
 
   /* Products grid */
-  .products{
-    margin-top:12px;
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap:18px;
-  }
-  .product{
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-radius:12px;
-    padding:12px;
-    border:1px solid rgba(255,255,255,0.03);
-    transition: transform .18s ease, box-shadow .18s ease;
-  }
-  .product:hover{ transform: translateY(-6px); box-shadow: 0 30px 70px rgba(0,0,0,0.6) }
-  .product img{ width:100%; height:200px; object-fit:cover; border-radius:8px; display:block; }
-  .product h3{ margin:10px 0 6px 0; font-size:16px; color:var(--accent); }
-  .price{ font-weight:700; color:var(--gold); font-size:16px; margin-bottom:8px; }
-  .desc{ color:var(--muted); font-size:13px; margin-bottom:10px; min-height:36px; }
-
-  .product .meta{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
-  .product .meta .btn-sm { padding:8px 10px; border-radius:8px; cursor:pointer; border:none; background:rgba(255,255,255,0.02); color:var(--accent); font-weight:600; }
-  .product .meta .btn-sm.buy{ background: linear-gradient(180deg, rgba(201,162,74,0.12), rgba(201,162,74,0.06)); color:var(--gold); border:1px solid rgba(201,162,74,0.15); }
-
-  /* Cart Drawer */
+    .products{
+      margin-top:24px;
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap:24px;
+    }
+    .product{
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border-radius:16px;
+      padding:16px;
+      border:1px solid rgba(201,162,74,0.15);
+      transition: transform .18s ease, box-shadow .18s ease;
+      position:relative;
+      overflow:hidden;
+    }
+    .product::before {
+      content:'';
+      position:absolute;
+      top:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg, var(--gold), rgba(201,162,74,0.3));
+    }
+    .product:hover{ 
+      transform: translateY(-8px); 
+      box-shadow: 0 30px 70px rgba(201,162,74,0.1);
+      border-color:rgba(201,162,74,0.3);
+    }
+    .product img{ 
+      width:100%; 
+      height:240px; 
+      object-fit:cover; 
+      border-radius:8px; 
+      display:block;
+      margin-bottom:12px;
+      border:1px solid rgba(255,255,255,0.05);
+    }
+.product h3{ margin:10px 0 6px 0; font-size:16px; color:var(--accent); }
+    .price{ 
+      font-weight:700; 
+      color:var(--gold); 
+      font-size:18px; 
+      margin-bottom:12px;
+      letter-spacing:0.5px;
+    }
+    .desc{ 
+      color:var(--muted); 
+      font-size:14px; 
+      margin-bottom:14px; 
+      min-height:42px;
+      line-height:1.5;
+    }
+.product .meta{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
+    .product .meta .btn-sm { 
+      padding:10px 14px; 
+      border-radius:8px; 
+      cursor:pointer; 
+      border:none; 
+      background:rgba(255,255,255,0.03); 
+      color:var(--accent); 
+      font-weight:600;
+      transition:all 0.2s ease;
+    }
+    .product .meta .btn-sm:hover {
+      background:rgba(255,255,255,0.08);
+    }
+    .product .meta .btn-sm.buy{ 
+      background: linear-gradient(180deg, rgba(201,162,74,0.2), rgba(201,162,74,0.1)); 
+      color:var(--gold); 
+      border:1px solid rgba(201,162,74,0.25);
+    }
+    .product .meta .btn-sm.buy:hover {
+      background: linear-gradient(180deg, rgba(201,162,74,0.25), rgba(201,162,74,0.15));
+    }
+/* Cart Drawer */
   .cart-drawer{
     position: fixed;
     right: 18px;
@@ -211,9 +260,9 @@
       <div class="brand" aria-hidden="false">
         <div class="logo" aria-hidden="true"><span>A</span></div>
         <div>
-          <h1>Aurelux Watches</h1>
-          <p>Exquisite timepieces — crafted for legacy</p>
-        </div>
+        <h1>Rolex Collection</h1>
+        <p>Official Rolex watches — Swiss precision since 1905</p>
+</div>
       </div>
 
       <div class="header-actions" role="region" aria-label="Header Aktionen">
@@ -230,17 +279,17 @@
     <!-- HERO -->
     <section class="hero" aria-label="Aurelux Kollektion">
       <div class="hero-card" role="region" aria-labelledby="heroTitle">
-        <h2 id="heroTitle">Zeitlose Eleganz — Moderne Präzision</h2>
-        <p>Entdecke handverlesene Mechanikuhren und edle Automatikmodelle. Jedes Stück steht für Exklusivität, Handwerk und Langlebigkeit.</p>
-        <div class="hero-cta">
+        <h2 id="heroTitle">Oyster Perpetual — The Rolex Legacy</h2>
+        <p>Entdecke die offizielle Rolex Kollektion. Schweizer Präzision, zeitloses Design und unvergleichliche Qualität seit 1905.</p>
+<div class="hero-cta">
           <button class="btn" id="shopAllBtn">Kollektion ansehen</button>
           <button class="btn secondary" id="learnBtn">Unsere Geschichte</button>
         </div>
       </div>
-      <div class="hero-image" aria-hidden="true">
-        <img src="https://images.unsplash.com/photo-1519741494786-1c9165d9b8d6?auto=format&fit=crop&w=1200&q=80" alt="Luxus Uhr auf schwarzem Hintergrund">
-      </div>
-    </section>
+    <div class="hero-image" aria-hidden="true">
+      <img src="https://content.rolex.com/dam/watches/family-pages/datejust/datejust-0001-hol-0001.jpg" alt="Rolex Datejust Uhr">
+    </div>
+</section>
 
     <!-- Produktliste -->
     <section>
@@ -325,50 +374,70 @@
   // Product data (demo). Bilder frei verwendbar (Unsplash). Du kannst später eigene Bilder einsetzen.
   const PRODUCTS = [
     {
-      id: 'AUR-001',
-      title: 'Aurelux Heritage 38',
-      price: 8990,
-      desc: 'Elegant automatik mit poliertem Gehäuse & Saphirglas. 38mm, Lederband.',
-      img: 'https://images.unsplash.com/photo-1519741494786-1c9165d9b8d6?auto=format&fit=crop&w=900&q=80'
+      id: 'RLX-001',
+      title: 'Rolex Daytona Platinum',
+      price: 67900,
+      desc: 'Platin-Gehäuse, exklusives Eisschwarz-Zifferblatt, Cerachrom-Lünette.',
+      img: 'https://content.rolex.com/dam/watches/hubs/all-watches/collection/submariner/m126610ln-0001/model-page/m126610ln-0001_0010_rolex.jpg'
     },
     {
-      id: 'AUR-002',
-      title: 'Aurelux Regent Chrono',
-      price: 12500,
-      desc: 'Chronograph mit feinem mechanischen Werk, 42mm, schwarze Keramik-Lünette.',
-      img: 'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?auto=format&fit=crop&w=900&q=80'
+      id: 'RLX-002',
+      title: 'Rolex Submariner Date',
+      price: 11250,
+      desc: 'Klassische Taucheruhr, 300m Wasserdicht, 18k Gold & Stahl.',
+      img: 'https://content.rolex.com/dam/watches/hubs/all-watches/collection/gmt-master-ii/m126710blnr-0002/model-page/m126710blnr-0002_0010_rolex.jpg'
     },
     {
-      id: 'AUR-003',
-      title: 'Aurelux Midnight Sport',
-      price: 6690,
-      desc: 'Sportlich-elegant, 100m Wasserdicht, robustes Metallband, Sekundenstopp.',
-      img: 'https://images.unsplash.com/photo-1549880338-65ddcdfd017b?auto=format&fit=crop&w=900&q=80'
+      id: 'RLX-003',
+      title: 'Rolex GMT-Master II',
+      price: 14300,
+      desc: 'Dual-Time-Funktion, Oystersteel & Everose Gold, Saphirglas.',
+      img: 'https://content.rolex.com/dam/watches/hubs/all-watches/collection/day-date/m228239-0038/model-page/m228239-0038_0010_rolex.jpg'
     },
     {
-      id: 'AUR-004',
-      title: 'Aurelux Classic Gold',
-      price: 18900,
-      desc: 'Luxuriöses Goldgehäuse, Guillochiertes Zifferblatt, limitierte Auflage.',
-      img: 'https://images.unsplash.com/photo-1543163521-1bf539c55c7b?auto=format&fit=crop&w=900&q=80'
+      id: 'RLX-004',
+      title: 'Rolex Day-Date 40',
+      price: 45800,
+      desc: 'Präsidentenarmband, 18k Weißgold, Smaragd-Zifferblatt.',
+      img: 'https://content.rolex.com/dam/watches/hubs/all-watches/collection/yacht-master/m226659-0002/model-page/m226659-0002_0010_rolex.jpg'
     },
     {
-      id: 'AUR-005',
-      title: 'Aurelux Explorer',
-      price: 7490,
-      desc: 'Reduziert & robust, ideale Reiseuhr mit GMT-Funktion.',
-      img: 'https://images.unsplash.com/photo-1539883374797-5b4b1b3f9c3c?auto=format&fit=crop&w=900&q=80'
+      id: 'RLX-005',
+      title: 'Rolex Yacht-Master 42',
+      price: 38600,
+      desc: 'Platin-Gehäuse, mattschwarzes Zifferblatt, rutschfestes Oysterflex-Armband.',
+      img: 'https://content.rolex.com/dam/watches/hubs/all-watches/collection/sky-dweller/m336934-0003/model-page/m336934-0003_0010_rolex.jpg'
     },
     {
-      id: 'AUR-006',
-      title: 'Aurelux Atelier Tourbillon',
-      price: 54900,
-      desc: 'Meisterwerk: Tourbillon, handveredelte Brücken, skelettiertes Werk.',
-      img: 'https://images.unsplash.com/photo-1490367532201-b9bc1dc483f6?auto=format&fit=crop&w=900&q=80'
-    }
+      id: 'RLX-006',
+      title: 'Rolex Sky-Dweller',
+      price: 51900,
+      desc: 'Jahreskalender & Dual-Time, 18k Roségold, Fluted Bezel.',
+      img: 'https://content.rolex.com/dam/watches/hubs/all-watches/collection/datejust/m126203-0019/model-page/m126203-0019_0010_rolex.jpg'
+    },
+    {
+      id: 'RLX-007',
+      title: 'Rolex Datejust 36',
+      price: 8900,
+      desc: 'Ewige Eleganz, 18k Gelbgold, Jubilé-Armband, Diamantenindizes.',
+      img: 'https://content.rolex.com/dam/watches/hubs/all-watches/collection/cosmograph-daytona/m116505-0016/model-page/m116505-0016_0010_rolex.jpg'
+    },
+    {
+      id: 'RLX-008',
+      title: 'Rolex Cosmograph Rainbow',
+      price: 129000,
+      desc: 'Exklusiv: Regenbogen-Saphire, 18k Roségold, Perpetual-Kaliber.',
+      img: 'https://content.rolex.com/dam/watches/hubs/all-watches/collection/pearlmaster/m86285-0001/model-page/m86285-0001_0010_rolex.jpg'
+    },
+    {
+      id: 'RLX-009',
+      title: 'Rolex Pearlmaster 39',
+      price: 75800,
+      desc: 'Luxuriöses Damenmodell, 18k Weißgold mit Diamantenbesatz.',
+      img: 'https://content.rolex.com/dam/watches/hubs/all-watches/collection/explorer/m224270-0001/model-page/m224270-0001_0010_rolex.jpg'
+}
   ];
-
-  // utilities
+// utilities
   const formatPrice = (centsOrEuro) => {
     // INPUT prices are in whole euros above
     return new Intl.NumberFormat('de-DE', { style:'currency', currency:'EUR' }).format(centsOrEuro);
