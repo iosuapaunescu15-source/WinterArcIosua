@@ -1,648 +1,573 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Iosua — Winter Arc & Trainingsplan</title>
-  <style>
-    /* Grundstil */
-    :root {
-      --accent: #1abc9c;
-      --dark: #34495e;
-      --bg: #f4f7fb;
-    }
-    *{box-sizing:border-box}
-    body{
-      font-family: Arial, Helvetica, sans-serif;
-      margin:0;
-      background: linear-gradient(135deg,#dfe9f3 0%,#ffffff 100%);
-      color:#222;
-      min-height:100vh;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Aurelux Watches — Luxuriöse Zeitmesser</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1113;
+    --card:#0f1416;
+    --muted:#bfc7cd;
+    --gold:#c9a24a;
+    --accent:#e6d8b0;
+    --glass: rgba(255,255,255,0.03);
+    --radius:14px;
+    --maxw:1100px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg, #070708 0%, #0f1113 100%);
+    color: #e9eef2;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    padding:24px;
+    display:flex;
+    justify-content:center;
+  }
 
-    /* HOMEPAGE */
-    #home{
-      height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      flex-direction:column;
-      background:url('https://images.unsplash.com/photo-1608889175113-28e38a1e8c5b?auto=format&fit=crop&w=1600&q=60') center/cover no-repeat;
-      color:white;
-    }
-    #home h1{
-      font-size:3rem;
-      margin:0;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
-    }
-    .home-buttons{
-      margin-top:28px;
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      justify-content:center;
-    }
-    .home-buttons button{
-      background:var(--accent);
-      color:white;
-      border:none;
-      padding:14px 28px;
-      border-radius:10px;
-      font-size:1.05rem;
-      cursor:pointer;
-      box-shadow:0 6px 18px rgba(0,0,0,0.2);
-      transition:transform .15s ease,background .15s ease;
-    }
-    .home-buttons button:hover{ transform:translateY(-3px); background:#16a085;}
+  .site{
+    width:100%;
+    max-width:var(--maxw);
+  }
 
-    /* Sektionen */
-    .section{
-      display:none;
-      padding:26px;
-      min-height:100vh;
-      background:var(--bg);
-      position:relative;
-    }
-    .visible{ display:block; }
+  /* Header */
+  header{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    justify-content:space-between;
+    margin-bottom:28px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .logo {
+    width:64px;height:64px;border-radius:12px;
+    background:linear-gradient(135deg, rgba(201,162,74,0.12), rgba(201,162,74,0.25));
+    display:flex;align-items:center;justify-content:center;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6), inset 0 -6px 18px rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+  .logo span{ color:var(--gold); font-family:"Playfair Display"; font-weight:700; font-size:20px; letter-spacing:1px; }
+  .brand h1{ margin:0; font-family:"Playfair Display"; font-weight:700; font-size:20px; color:var(--accent) }
+  .brand p{ margin:0; font-size:12px; color:var(--muted) }
 
-    h1.section-title{ text-align:center; color:var(--dark); margin-top:10px; margin-bottom:18px; }
+  .header-actions{
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+  .search {
+    background:var(--glass);
+    border-radius:10px;
+    padding:8px 10px;
+    display:flex;align-items:center;gap:8px;
+    border:1px solid rgba(255,255,255,0.03);
+  }
+  .search input{
+    background:transparent;border:none;outline:none;color:var(--accent);font-size:14px;
+    width:180px;
+  }
+  .btn {
+    background: linear-gradient(180deg, rgba(201,162,74,0.15), rgba(201,162,74,0.06));
+    color:var(--gold);
+    border: 1px solid rgba(201,162,74,0.18);
+    padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer;
+    box-shadow:0 8px 30px rgba(0,0,0,0.6);
+  }
+  .btn.secondary{
+    background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04);
+  }
+  .cart-count{
+    background:var(--gold); color:#0b0b0b; font-weight:700; border-radius:8px; padding:4px 8px; font-size:13px;
+  }
 
-    /* Zurück-Button */
-    .back-home{
-      position:absolute;
-      top:20px;
-      left:20px;
-      background:var(--dark);
-      color:white;
-      border:none;
-      border-radius:8px;
-      padding:8px 14px;
-      font-size:0.95rem;
-      cursor:pointer;
-      transition:background 0.2s;
-      z-index:50;
-    }
-    .back-home:hover{ background:#2c3e50; }
+  /* Hero */
+  .hero{
+    display:grid;
+    grid-template-columns: 1fr 420px;
+    gap:24px;
+    margin-bottom:28px;
+  }
+  .hero-card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:var(--radius);
+    padding:28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    border:1px solid rgba(255,255,255,0.03);
+  }
+  .hero-card h2{
+    margin:0 0 8px 0;font-family:"Playfair Display";font-size:32px;color:var(--gold);
+  }
+  .hero-card p{ margin:0 0 18px 0; color:var(--muted); font-size:15px; line-height:1.5 }
+  .hero-cta{ display:flex; gap:12px; flex-wrap:wrap; }
+  .hero-image{
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+  .hero-image img{ display:block; width:100%; height:100%; object-fit:cover; max-height:420px; }
 
-    /* Day buttons */
-    .day-buttons{
-      display:flex;
-      justify-content:center;
-      gap:10px;
-      margin-bottom:20px;
-      flex-wrap:wrap;
-    }
-    .day-buttons button{
-      background:var(--dark);
-      color:white;
-      border:none;
-      padding:8px 14px;
-      border-radius:8px;
-      cursor:pointer;
-      font-size:0.95rem;
-    }
-    .day-buttons button.active{ background:var(--accent); }
+  /* Products grid */
+  .products{
+    margin-top:12px;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:18px;
+  }
+  .product{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:12px;
+    padding:12px;
+    border:1px solid rgba(255,255,255,0.03);
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .product:hover{ transform: translateY(-6px); box-shadow: 0 30px 70px rgba(0,0,0,0.6) }
+  .product img{ width:100%; height:200px; object-fit:cover; border-radius:8px; display:block; }
+  .product h3{ margin:10px 0 6px 0; font-size:16px; color:var(--accent); }
+  .price{ font-weight:700; color:var(--gold); font-size:16px; margin-bottom:8px; }
+  .desc{ color:var(--muted); font-size:13px; margin-bottom:10px; min-height:36px; }
 
-    /* Tabellen */
-    .table-wrap{ overflow-x:auto; }
-    table{
-      width:100%;
-      border-collapse:collapse;
-      margin:0 auto 28px;
-      background:white;
-      box-shadow:0 6px 18px rgba(0,0,0,0.06);
-      display:none;
-      min-width:320px;
-    }
-    th,td{ padding:12px; border:1px solid #e6e6e6; text-align:left; }
-    th{ background:var(--dark); color:white; }
-    tr:nth-child(even){ background:#fafafa; }
-    .day{ background:var(--dark); color:white; text-align:center; font-weight:700; font-size:1.05rem; }
+  .product .meta{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .product .meta .btn-sm { padding:8px 10px; border-radius:8px; cursor:pointer; border:none; background:rgba(255,255,255,0.02); color:var(--accent); font-weight:600; }
+  .product .meta .btn-sm.buy{ background: linear-gradient(180deg, rgba(201,162,74,0.12), rgba(201,162,74,0.06)); color:var(--gold); border:1px solid rgba(201,162,74,0.15); }
 
-    /* aktive Zeitzeile */
-    tr.active-time{ background:#d1f5d3 !important; font-weight:700; }
+  /* Cart Drawer */
+  .cart-drawer{
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    width: 360px;
+    max-width: calc(100% - 36px);
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:14px;
+    box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+    border:1px solid rgba(255,255,255,0.04);
+    overflow:hidden;
+    transform: translateY(30px) scale(0.98);
+    opacity:0;
+    visibility:hidden;
+    transition: all .25s ease;
+    z-index:100000;
+  }
+  .cart-drawer.open{ transform: translateY(0) scale(1); opacity:1; visibility:visible; }
+  .cart-header{ padding:14px 16px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.03); }
+  .cart-list{ max-height:360px; overflow:auto; padding:12px 16px; }
+  .cart-item{ display:flex; gap:12px; align-items:center; padding:10px 0; border-bottom:1px dashed rgba(255,255,255,0.02); }
+  .cart-item img{ width:62px; height:62px; object-fit:cover; border-radius:8px; }
+  .cart-item .info{ flex:1 }
+  .cart-item .qty{ display:flex; gap:6px; align-items:center; }
+  .cart-footer{ padding:12px 16px; border-top:1px solid rgba(255,255,255,0.03); display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .total{ font-weight:700; color:var(--gold); }
 
-    /* Modal (Routinen) */
-    .modal{
-      display:none;
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.55);
-      z-index:9999;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
-    }
-    .modal .card{
-      background:white;
-      border-radius:10px;
-      padding:18px;
-      max-width:520px;
-      width:100%;
-      box-shadow:0 8px 30px rgba(0,0,0,0.2);
-    }
-    .close-btn{ float:right; cursor:pointer; font-size:20px; color:#555; }
+  /* Checkout modal */
+  .overlay {
+    position: fixed; inset:0; background: rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center; z-index:100001;
+  }
+  .checkout-card{
+    width:100%; max-width:720px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius: 12px; padding:18px; color:var(--accent);
+  }
+  .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  label{ font-size:13px; color:var(--muted); display:block; margin-bottom:6px; }
+  input, select, textarea{
+    width:100%; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:var(--accent);
+    outline:none; font-size:14px;
+  }
+  .small{ font-size:13px; color:var(--muted) }
 
-    /* Trainings Tabelle */
-    #training table{ display:table; }
-    #training td{ vertical-align:top; }
+  /* Footer */
+  footer{ margin-top:28px; text-align:center; color:var(--muted); font-size:13px; }
 
-    /* Schlafmodus Overlay */
-    #sleepOverlay {
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(circle at 20% 30%, #00111a 0%, #000814 70%);
-      z-index: 20000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      color: white;
-      font-size: 2rem;
-      text-align: center;
-      animation: fadeIn 800ms ease forwards;
-      overflow: hidden;
-    }
+  /* Responsivity */
+  @media (max-width:980px){
+    .hero{ grid-template-columns: 1fr; }
+    .products{ grid-template-columns: repeat(2,1fr) }
+    .cart-drawer{ width:92%; right:4%; left:4%; bottom:18px; }
+  }
+  @media (max-width:600px){
+    .products{ grid-template-columns: 1fr }
+    header{ gap:8px; flex-direction:column; align-items:flex-start }
+    .header-actions{ width:100%; justify-content:space-between }
+    .search input{ width:100px }
+  }
 
-    #sleepOverlay .stars {
-      position: absolute;
-      width: 200%;
-      height: 200%;
-      left: -50%;
-      top: -50%;
-      z-index: 0;
-    }
-
-    .star {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.8;
-      animation: twinkle 2s infinite ease-in-out alternate;
-    }
-
-    @keyframes twinkle {
-      from { opacity: 0.15; transform: scale(0.7); }
-      to { opacity: 1; transform: scale(1.3); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .sleep-text {
-      position: relative;
-      z-index: 2;
-      text-shadow: 0 0 10px rgba(255,255,255,0.6);
-      animation: float 6s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    /* Close X oben rechts (weiß) */
-    #sleepCloseX {
-      position: absolute;
-      top: 12px;
-      right: 16px;
-      z-index: 21000;
-      color: white;
-      font-size: 28px;
-      cursor: pointer;
-      line-height: 28px;
-      width: 44px;
-      height: 44px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border-radius:50%;
-      transition: transform .15s ease, background .15s ease;
-      text-shadow: 0 0 10px rgba(255,255,255,0.4);
-    }
-    #sleepCloseX:hover { transform: scale(1.15); color: #1abc9c; }
-
-    /* kleine Info unter Text */
-    .sleep-sub { font-size:0.8rem; opacity:0.9; margin-top:8px; z-index:2; }
-
-    @media (max-width:768px){
-      #home h1{ font-size:2rem; padding:0 20px; }
-      .home-buttons button{ padding:10px 18px; font-size:1rem; }
-      th,td{ padding:9px; font-size:14px; }
-      .day-buttons button{ padding:7px 10px; font-size:13px; }
-      #sleepOverlay { font-size:1.4rem; }
-      #sleepCloseX { font-size:24px; width:40px; height:40px; }
-    }
-  </style>
+  /* small helpers */
+  .muted{ color:var(--muted); font-size:13px }
+</style>
 </head>
 <body>
+  <div class="site" role="main">
+    <header>
+      <div class="brand" aria-hidden="false">
+        <div class="logo" aria-hidden="true"><span>A</span></div>
+        <div>
+          <h1>Aurelux Watches</h1>
+          <p>Exquisite timepieces — crafted for legacy</p>
+        </div>
+      </div>
 
-  <!-- HOMEPAGE -->
-  <div id="home">
-    <h1>Willkommen, Iosua ❄️</h1>
-    <div class="home-buttons">
-      <button id="btn-plan">Winter Arc Plan</button>
-      <button id="btn-training">Trainingsplan</button>
+      <div class="header-actions" role="region" aria-label="Header Aktionen">
+        <div class="search" role="search" aria-label="Produkte suchen">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="opacity:.8"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2"/></svg>
+          <input id="searchInput" placeholder="Suche Uhren..." aria-label="Suche Uhren">
+        </div>
+
+        <button class="btn secondary" id="btn-wishlist" title="Favoriten">Favoriten</button>
+        <button class="btn" id="btn-cart" aria-haspopup="dialog" aria-controls="cartDrawer">Warenkorb <span id="cartCount" class="cart-count">0</span></button>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" aria-label="Aurelux Kollektion">
+      <div class="hero-card" role="region" aria-labelledby="heroTitle">
+        <h2 id="heroTitle">Zeitlose Eleganz — Moderne Präzision</h2>
+        <p>Entdecke handverlesene Mechanikuhren und edle Automatikmodelle. Jedes Stück steht für Exklusivität, Handwerk und Langlebigkeit.</p>
+        <div class="hero-cta">
+          <button class="btn" id="shopAllBtn">Kollektion ansehen</button>
+          <button class="btn secondary" id="learnBtn">Unsere Geschichte</button>
+        </div>
+      </div>
+      <div class="hero-image" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1519741494786-1c9165d9b8d6?auto=format&fit=crop&w=1200&q=80" alt="Luxus Uhr auf schwarzem Hintergrund">
+      </div>
+    </section>
+
+    <!-- Produktliste -->
+    <section>
+      <h3 style="margin:0 0 12px 0; color:var(--muted)">Featured Kollektion</h3>
+      <div class="products" id="productGrid" aria-live="polite">
+        <!-- Produkte werden dynamisch eingefügt -->
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Aurelux Watches — All rights reserved. Designed with ❤️
+    </footer>
+  </div>
+
+  <!-- Cart Drawer -->
+  <aside id="cartDrawer" class="cart-drawer" aria-hidden="true" aria-label="Warenkorb">
+    <div class="cart-header">
+      <strong>Warenkorb</strong>
+      <button id="closeCart" class="btn secondary" aria-label="Warenkorb schließen">Schließen</button>
+    </div>
+    <div class="cart-list" id="cartList" role="list">
+      <!-- items -->
+    </div>
+    <div class="cart-footer">
+      <div>
+        <div class="small">Zwischensumme</div>
+        <div class="total" id="cartTotal">0,00 €</div>
+      </div>
+      <div style="margin-left:auto">
+        <button class="btn" id="checkoutBtn">Zur Kasse</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Checkout Overlay -->
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <div class="checkout-card" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+      <h2 id="checkoutTitle">Checkout</h2>
+      <p class="muted">Beachte: Dies ist ein Demo-Checkout. Es werden keine echten Zahlungen verarbeitet.</p>
+
+      <form id="checkoutForm" onsubmit="return false;">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
+          <div style="flex:1;min-width:240px">
+            <label for="name">Voller Name</label>
+            <input id="name" required placeholder="Max Mustermann">
+          </div>
+          <div style="flex:1;min-width:200px">
+            <label for="email">E-Mail</label>
+            <input id="email" type="email" required placeholder="mail@example.com">
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <label for="address">Lieferadresse</label>
+          <input id="address" required placeholder="Straße 12, 1010 Wien">
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:12px;align-items:end;flex-wrap:wrap">
+          <div style="flex:1;min-width:160px">
+            <label for="city">Ort</label>
+            <input id="city" required placeholder="Wien">
+          </div>
+          <div style="width:130px">
+            <label for="zip">PLZ</label>
+            <input id="zip" required placeholder="1010">
+          </div>
+          <div style="width:160px">
+            <label for="country">Land</label>
+            <select id="country"><option>Österreich</option><option>Deutschland</option><option>Schweiz</option><option>Andere</option></select>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;display:flex;gap:12px;justify-content:flex-end">
+          <button id="cancelCheckout" class="btn secondary" type="button">Abbrechen</button>
+          <button id="submitOrder" class="btn" type="button">Kostenpflichtig bestellen</button>
+        </div>
+      </form>
     </div>
   </div>
 
-  <!-- WINTER ARC PLAN (Sektion) -->
-  <section id="plan" class="section" aria-hidden="true">
-    <button class="back-home" id="backFromPlan">← Zurück zur Startseite</button>
-    <h1 class="section-title">Winter Arc Plan</h1>
+<script>
+  // Product data (demo). Bilder frei verwendbar (Unsplash). Du kannst später eigene Bilder einsetzen.
+  const PRODUCTS = [
+    {
+      id: 'AUR-001',
+      title: 'Aurelux Heritage 38',
+      price: 8990,
+      desc: 'Elegant automatik mit poliertem Gehäuse & Saphirglas. 38mm, Lederband.',
+      img: 'https://images.unsplash.com/photo-1519741494786-1c9165d9b8d6?auto=format&fit=crop&w=900&q=80'
+    },
+    {
+      id: 'AUR-002',
+      title: 'Aurelux Regent Chrono',
+      price: 12500,
+      desc: 'Chronograph mit feinem mechanischen Werk, 42mm, schwarze Keramik-Lünette.',
+      img: 'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?auto=format&fit=crop&w=900&q=80'
+    },
+    {
+      id: 'AUR-003',
+      title: 'Aurelux Midnight Sport',
+      price: 6690,
+      desc: 'Sportlich-elegant, 100m Wasserdicht, robustes Metallband, Sekundenstopp.',
+      img: 'https://images.unsplash.com/photo-1549880338-65ddcdfd017b?auto=format&fit=crop&w=900&q=80'
+    },
+    {
+      id: 'AUR-004',
+      title: 'Aurelux Classic Gold',
+      price: 18900,
+      desc: 'Luxuriöses Goldgehäuse, Guillochiertes Zifferblatt, limitierte Auflage.',
+      img: 'https://images.unsplash.com/photo-1543163521-1bf539c55c7b?auto=format&fit=crop&w=900&q=80'
+    },
+    {
+      id: 'AUR-005',
+      title: 'Aurelux Explorer',
+      price: 7490,
+      desc: 'Reduziert & robust, ideale Reiseuhr mit GMT-Funktion.',
+      img: 'https://images.unsplash.com/photo-1539883374797-5b4b1b3f9c3c?auto=format&fit=crop&w=900&q=80'
+    },
+    {
+      id: 'AUR-006',
+      title: 'Aurelux Atelier Tourbillon',
+      price: 54900,
+      desc: 'Meisterwerk: Tourbillon, handveredelte Brücken, skelettiertes Werk.',
+      img: 'https://images.unsplash.com/photo-1490367532201-b9bc1dc483f6?auto=format&fit=crop&w=900&q=80'
+    }
+  ];
 
-    <div class="day-buttons" role="tablist" aria-label="Wochentage">
-      <button data-day="montag">Montag</button>
-      <button data-day="dienstag">Dienstag</button>
-      <button data-day="mittwoch">Mittwoch</button>
-      <button data-day="donnerstag">Donnerstag</button>
-      <button data-day="freitag">Freitag</button>
-    </div>
+  // utilities
+  const formatPrice = (centsOrEuro) => {
+    // INPUT prices are in whole euros above
+    return new Intl.NumberFormat('de-DE', { style:'currency', currency:'EUR' }).format(centsOrEuro);
+  };
 
-    <div class="table-wrap">
-      <!-- MONTAG -->
-      <table id="montag" aria-hidden="true">
-        <tr><td colspan="2" class="day">Montag</td></tr>
-        <tr><th>Zeit</th><th>Aktivität</th></tr>
-        <tr><td>06:00</td><td>Aufstehen</td></tr>
-        <tr><td>06:00 - 06:50</td><td><span class="routine-link" data-routine="morning">Morgenroutine</span></td></tr>
-        <tr><td>06:50 - 14:30</td><td>Schule</td></tr>
-        <tr><td>14:30 - 15:30</td><td>Essen / Relax</td></tr>
-        <tr><td>15:30 - 16:00</td><td>Hausübungen</td></tr>
-        <tr><td>16:00 - 17:30</td><td>Workout (Spielplatz)</td></tr>
-        <tr><td>17:30 - 18:00</td><td>Relax / Business / Darius telefonieren</td></tr>
-        <tr><td>18:30 - 21:00</td><td>Kirche</td></tr>
-        <tr><td>21:00</td><td><span class="routine-link" data-routine="evening">Abendroutine</span></td></tr>
-        <tr><td>22:00</td><td>Schlafen</td></tr>
-      </table>
+  // render products
+  const grid = document.getElementById('productGrid');
+  function renderProducts(list = PRODUCTS){
+    grid.innerHTML = '';
+    list.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'product';
+      card.innerHTML = `
+        <img src="${p.img}" alt="${p.title}">
+        <h3>${p.title}</h3>
+        <div class="price">${formatPrice(p.price)}</div>
+        <div class="desc">${p.desc}</div>
+        <div class="meta">
+          <button class="btn-sm" data-id="${p.id}" aria-label="Details ${p.title}">Details</button>
+          <button class="btn-sm buy" data-add="${p.id}" aria-label="In den Warenkorb ${p.title}">In den Warenkorb</button>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+  renderProducts();
 
-      <!-- DIENSTAG -->
-      <table id="dienstag" aria-hidden="true">
-        <tr><td colspan="2" class="day">Dienstag</td></tr>
-        <tr><th>Zeit</th><th>Aktivität</th></tr>
-        <tr><td>06:00</td><td>Aufstehen</td></tr>
-        <tr><td>06:00 - 06:50</td><td><span class="routine-link" data-routine="morning">Morgenroutine</span></td></tr>
-        <tr><td>06:50 - 17:00</td><td>Schule</td></tr>
-        <tr><td>17:00 - 18:00</td><td>Essen / Relax</td></tr>
-        <tr><td>18:00 - 18:30</td><td>Lernen</td></tr>
-        <tr><td>18:30 - 19:30</td><td>Workout</td></tr>
-        <tr><td>19:30 - 20:00</td><td><span class="routine-link" data-routine="dienstag">Dienstag Routine</span></td></tr>
-        <tr><td>20:00</td><td><span class="routine-link" data-routine="evening">Abendroutine</span></td></tr>
-        <tr><td>22:00</td><td>Schlafen</td></tr>
-      </table>
+  // Cart logic
+  let CART = JSON.parse(localStorage.getItem('aurelux_cart') || '[]');
 
-      <!-- MITTWOCH -->
-      <table id="mittwoch" aria-hidden="true">
-        <tr><td colspan="2" class="day">Mittwoch</td></tr>
-        <tr><th>Zeit</th><th>Aktivität</th></tr>
-        <tr><td>06:50</td><td>Aufstehen</td></tr>
-        <tr><td>06:50 - 07:45</td><td><span class="routine-link" data-routine="morning">Morgenroutine</span></td></tr>
-        <tr><td>07:45 - 13:30</td><td>Schule</td></tr>
-        <tr><td>13:30 - 14:00</td><td>Essen / Relax</td></tr>
-        <tr><td>14:00 - 14:30</td><td>Lernen / Relax</td></tr>
-        <tr><td>14:30 - 16:00</td><td>Workout (Sportplatz)</td></tr>
-        <tr><td>16:00 - 18:30</td><td>Essen / Frei / Darius telefonieren</td></tr>
-        <tr><td>18:30 - 21:00</td><td>Kirche</td></tr>
-        <tr><td>21:00</td><td><span class="routine-link" data-routine="evening">Abendroutine</span></td></tr>
-        <tr><td>22:00</td><td>Schlafen</td></tr>
-      </table>
+  const cartBtn = document.getElementById('btn-cart');
+  const cartDrawer = document.getElementById('cartDrawer');
+  const cartList = document.getElementById('cartList');
+  const cartCount = document.getElementById('cartCount');
+  const cartTotalEl = document.getElementById('cartTotal');
+  const closeCart = document.getElementById('closeCart');
+  const checkoutBtn = document.getElementById('checkoutBtn');
+  const overlay = document.getElementById('overlay');
 
-      <!-- DONNERSTAG -->
-      <table id="donnerstag" aria-hidden="true">
-        <tr><td colspan="2" class="day">Donnerstag</td></tr>
-        <tr><th>Zeit</th><th>Aktivität</th></tr>
-        <tr><td>06:00 / 08:00</td><td>Aufstehen</td></tr>
-        <tr><td>06:50 / 09:15</td><td><span class="routine-link" data-routine="morning">Morgenroutine</span></td></tr>
-        <tr><td>06:50 / 09:15 - 17:00</td><td>Schule</td></tr>
-        <tr><td>17:00 - 17:30</td><td>Relax</td></tr>
-        <tr><td>17:30 - 18:00</td><td>Essen</td></tr>
-        <tr><td>18:00 - 18:30</td><td>Lernen / Relax</td></tr>
-        <tr><td>18:30 - 19:30</td><td>Workout</td></tr>
-        <tr><td>19:30 - 20:00</td><td>Darius telefonieren / Relax</td></tr>
-        <tr><td>20:00</td><td><span class="routine-link" data-routine="evening">Abendroutine</span></td></tr>
-        <tr><td>22:00</td><td>Schlafen</td></tr>
-      </table>
+  function saveCart(){ localStorage.setItem('aurelux_cart', JSON.stringify(CART)); }
+  function updateCartDisplay(){
+    cartCount.textContent = CART.reduce((s,i)=>s+i.qty,0);
+    cartList.innerHTML = '';
+    if(CART.length === 0){
+      cartList.innerHTML = '<div class="muted" style="padding:18px;text-align:center">Dein Warenkorb ist leer.</div>';
+      cartTotalEl.textContent = formatPrice(0);
+      return;
+    }
+    let total = 0;
+    CART.forEach(item=>{
+      const product = PRODUCTS.find(p=>p.id===item.id);
+      const row = document.createElement('div');
+      row.className = 'cart-item';
+      row.innerHTML = `
+        <img src="${product.img}" alt="${product.title}">
+        <div class="info">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div><strong style="font-size:14px">${product.title}</strong><div class="muted" style="font-size:12px">${formatPrice(product.price)}</div></div>
+            <div style="text-align:right">
+              <div class="qty">
+                <button class="btn secondary btn-dec" data-id="${item.id}">−</button>
+                <span style="padding:0 8px">${item.qty}</span>
+                <button class="btn secondary btn-inc" data-id="${item.id}">+</button>
+              </div>
+              <div style="margin-top:6px"><button class="btn secondary btn-remove" data-id="${item.id}">Entfernen</button></div>
+            </div>
+          </div>
+        </div>
+      `;
+      cartList.appendChild(row);
+      total += product.price * item.qty;
+    });
+    cartTotalEl.textContent = formatPrice(total);
+  }
 
-      <!-- FREITAG -->
-      <table id="freitag" aria-hidden="true">
-        <tr><td colspan="2" class="day">Freitag (Restday)</td></tr>
-        <tr><th>Zeit</th><th>Aktivität</th></tr>
-        <tr><td>06:00</td><td>Aufstehen</td></tr>
-        <tr><td>06:00 - 06:50</td><td><span class="routine-link" data-routine="morning">Morgenroutine</span></td></tr>
-        <tr><td>06:50 - 17:00</td><td>Schule</td></tr>
-        <tr><td>17:00 - 17:15</td><td>Vorbereiten ADO</td></tr>
-        <tr><td>17:15 - 22:00</td><td>Kirche</td></tr>
-        <tr><td>22:00</td><td><span class="routine-link" data-routine="evening">Abendroutine</span></td></tr>
-      </table>
-    </div>
-  </section>
+  function openCart(){
+    cartDrawer.classList.add('open');
+    cartDrawer.setAttribute('aria-hidden','false');
+    updateCartDisplay();
+  }
+  function closeCartFn(){
+    cartDrawer.classList.remove('open');
+    cartDrawer.setAttribute('aria-hidden','true');
+  }
 
-  <!-- TRAINING (Sektion) -->
-  <section id="training" class="section" aria-hidden="true">
-    <button class="back-home" id="backFromTraining">← Zurück zur Startseite</button>
-    <h1 class="section-title">Trainingsplan — Zuhause (4 Tage, Freitag Rest)</h1>
-    <div class="table-wrap">
-      <table aria-hidden="false">
-        <tr><th>Tag</th><th>Training (Übungen, Sätze x WH)</th></tr>
-        <tr><td>Montag — Push & Schultern</td>
-            <td>
-              Aufwärmen 5–8 min (Seilspringen/leicht joggen)<br>
-              Liegestütze — 4 x 10–15<br>
-              Dips zwischen Stühlen — 3 x 8–12<br>
-              Hantel Schulterdrücken (stehend) — 3 x 8–12<br>
-              Pike Push-ups — 3 x 8–12<br>
-              Plank — 3 x 45–60s
-            </td></tr>
+  cartBtn.addEventListener('click', openCart);
+  closeCart.addEventListener('click', closeCartFn);
 
-        <tr><td>Dienstag — Beine & Core</td>
-            <td>
-              Aufwärmen 5–8 min<br>
-              Kniebeugen (mit Hanteln / Goblet) — 4 x 12–20<br>
-              Ausfallschritte (gehend oder statisch) — 3 x 10–12 / Bein<br>
-              Rumänisches Kreuzheben mit Hanteln (leichtes Gewicht) — 3 x 10–12<br>
-              Wadenheben (einbeinig mit Hantel) — 4 x 15–20<br>
-              Bauch-Crunches / Leg Raises — 3 x 15–20
-            </td></tr>
-
-        <tr><td>Mittwoch — Pull & Bizeps</td>
-            <td>
-              Aufwärmen 5–8 min<br>
-              Klimmzüge (falls möglich) oder inverted rows / Handtuch-rows — 4 x 6–12<br>
-              Einarmiges Hantelrudern — 3 x 8–12 / Seite<br>
-              Hantel-Bizepscurls — 3 x 10–15<br>
-              Face Pulls mit Band (oder Rear Delt Raises) — 3 x 12–15<br>
-              Seitstütz — 3 x 30–45s / Seite
-            </td></tr>
-
-        <tr><td>Donnerstag — Ganzkörper & Kondition (Zirkel)</td>
-            <td>
-              3 Runden, 60–90s Pause zwischen den Runden:<br>
-              1) Burpees — 12–15<br>
-              2) Jump Squats — 15–20<br>
-              3) Liegestütze — 12–15<br>
-              4) Hantel-Swings (oder Romanian Deadlift) — 15<br>
-              5) Sit-ups — 20
-            </td></tr>
-
-        <tr><td>Freitag — Restday</td>
-            <td>Leichtes Stretching / Mobility 15–25min, Spaziergang, Regeneration</td></tr>
-      </table>
-    </div>
-  </section>
-
-  <!-- Modal für Routinen -->
-  <div id="routineModal" class="modal" aria-hidden="true">
-    <div class="card">
-      <span class="close-btn" id="modalClose">&times;</span>
-      <h2 id="routineTitle"></h2>
-      <ul id="routineList"></ul>
-    </div>
-  </div>
-
-  <!-- Schlafanimation Overlay -->
-  <div id="sleepOverlay" aria-hidden="true" role="dialog" aria-label="Schlafmodus">
-    <div id="sleepCloseX" title="Zur Startseite">×</div>
-    <div class="stars" aria-hidden="true"></div>
-    <div class="sleep-text">😴 Schlaf gut, Iosua 🌙</div>
-    <div class="sleep-sub">Automatisch sichtbar zwischen 22:00 und 06:00</div>
-  </div>
-
-  <script>
-    /* ========== DOM-Elemente & Daten ========== */
-    const home = document.getElementById('home');
-    const plan = document.getElementById('plan');
-    const training = document.getElementById('training');
-    const btnPlan = document.getElementById('btn-plan');
-    const btnTraining = document.getElementById('btn-training');
-    const backFromPlan = document.getElementById('backFromPlan');
-    const backFromTraining = document.getElementById('backFromTraining');
-
-    // Routinen (aus deinem ursprünglichen Objekt)
-    const routines = {
-      morning: {
-        title: 'Morgenroutine',
-        items: [
-          '1 Stunde bevor Bus kommt aufstehen',
-          '50 Liegestütze (oder 3 Sätze nach Möglichkeit)',
-          'Schultasche vorbereiten',
-          'Zähne putzen',
-          'Essen (Kakao jeden Früh)',
-          'Haare machen',
-          'Bett machen',
-          'Beten + Bibel lesen'
-        ]
-      },
-      evening: {
-        title: 'Abendroutine',
-        items: [
-          'Creme benutzen',
-          'Zähne putzen',
-          'Outfit vorbereiten',
-          'mind. 8 Stunden Schlaf',
-          'Creatin nehmen',
-          'Schultasche vorbereiten'
-        ]
-      },
-      dienstag: {
-        title: 'Dienstag Routine',
-        items: [
-          'Bettwäsche wechseln 1x in 2 Wochen',
-          'Zimmer putzen',
-          'Haare schneiden überall jede 2 Wochen',
-          'Nägel schneiden',
-          'Haine murdare la spălat'
-        ]
+  // add to cart
+  document.body.addEventListener('click', (e)=>{
+    const add = e.target.closest('[data-add]');
+    if(add){
+      const id = add.getAttribute('data-add');
+      const exists = CART.find(i=>i.id===id);
+      if(exists) exists.qty++;
+      else CART.push({ id, qty: 1 });
+      saveCart();
+      updateCartDisplay();
+      openCart();
+      return;
+    }
+    const dec = e.target.closest('.btn-dec');
+    if(dec){
+      const id = dec.getAttribute('data-id');
+      const item = CART.find(i=>i.id===id);
+      if(item){
+        item.qty = Math.max(0, item.qty - 1);
+        if(item.qty === 0) CART = CART.filter(i=>i.id!==id);
+        saveCart(); updateCartDisplay();
       }
+      return;
+    }
+    const inc = e.target.closest('.btn-inc');
+    if(inc){
+      const id = inc.getAttribute('data-id');
+      const item = CART.find(i=>i.id===id);
+      if(item){ item.qty++; saveCart(); updateCartDisplay(); }
+      return;
+    }
+    const rem = e.target.closest('.btn-remove');
+    if(rem){
+      const id = rem.getAttribute('data-id');
+      CART = CART.filter(i=>i.id!==id);
+      saveCart(); updateCartDisplay();
+      return;
+    }
+  });
+
+  // checkout flow
+  checkoutBtn.addEventListener('click', ()=>{
+    if(CART.length === 0) { alert('Warenkorb ist leer.'); return; }
+    overlay.style.display = 'flex';
+    overlay.setAttribute('aria-hidden','false');
+  });
+  document.getElementById('cancelCheckout').addEventListener('click', ()=>{
+    overlay.style.display = 'none';
+    overlay.setAttribute('aria-hidden','true');
+  });
+
+  document.getElementById('submitOrder').addEventListener('click', ()=>{
+    // simple validation
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const address = document.getElementById('address').value.trim();
+    if(!name || !email || !address){ alert('Bitte fülle Name, E-Mail und Adresse aus.'); return; }
+
+    // "process" the order (demo)
+    const order = {
+      id: 'AX' + Date.now(),
+      date: new Date().toLocaleString(),
+      items: CART,
+      total: CART.reduce((s,i)=>(s + (PRODUCTS.find(p=>p.id===i.id).price * i.qty)),0),
+      customer: { name, email, address }
     };
 
-    /* ========== Navigation ========== */
-    btnPlan.addEventListener('click', ()=> openSection('plan'));
-    btnTraining.addEventListener('click', ()=> openSection('training'));
-    backFromPlan.addEventListener('click', showHome);
-    backFromTraining.addEventListener('click', showHome);
+    // clear cart
+    CART = [];
+    saveCart();
+    updateCartDisplay();
+    overlay.style.display = 'none';
+    overlay.setAttribute('aria-hidden','true');
+    closeCartFn();
 
-    function openSection(id){
-      // show chosen section, hide others
-      home.style.display = 'none';
-      plan.classList.remove('visible');
-      training.classList.remove('visible');
-      plan.setAttribute('aria-hidden','true');
-      training.setAttribute('aria-hidden','true');
+    // show confirmation (simple)
+    setTimeout(()=> {
+      alert('Danke für deine Bestellung! Bestellnummer: ' + order.id + '\n(Bei diesem Demo-Shop werden keine echten Zahlungen verarbeitet.)');
+    }, 300);
+  });
 
-      if(id === 'plan'){
-        plan.classList.add('visible');
-        plan.setAttribute('aria-hidden','false');
-        // beim Öffnen: wähle automatisch heutigen Tag (Mo-Fr) oder Montag bei WE
-        const days = ['sonntag','montag','dienstag','mittwoch','donnerstag','freitag','samstag'];
-        const today = days[new Date().getDay()];
-        const choose = ['montag','dienstag','mittwoch','donnerstag','freitag'].includes(today) ? today : 'montag';
-        showDay(choose);
-      } else if(id === 'training'){
-        training.classList.add('visible');
-        training.setAttribute('aria-hidden','false');
-      }
+  // search filter
+  document.getElementById('searchInput').addEventListener('input', (e)=>{
+    const q = e.target.value.trim().toLowerCase();
+    if(!q){ renderProducts(); return; }
+    const filtered = PRODUCTS.filter(p => (p.title + ' ' + p.desc).toLowerCase().includes(q));
+    renderProducts(filtered);
+  });
+
+  // shop all button scroll
+  document.getElementById('shopAllBtn').addEventListener('click', ()=> {
+    window.scrollTo({ top: document.getElementById('productGrid').offsetTop - 20, behavior:'smooth' });
+  });
+
+  // init
+  document.getElementById('year').textContent = new Date().getFullYear();
+  updateCartDisplay();
+
+  // Accessibility: close overlay with ESC
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape'){
+      overlay.style.display='none';
+      overlay.setAttribute('aria-hidden','true');
+      closeCartFn();
     }
+  });
 
-    function showHome(){
-      // hide sections, show home
-      plan.classList.remove('visible');
-      training.classList.remove('visible');
-      plan.setAttribute('aria-hidden','true');
-      training.setAttribute('aria-hidden','true');
-      home.style.display = 'flex';
-    }
-
-    /* ========== Day-Buttons & Table Anzeige ========== */
-    document.querySelectorAll('.day-buttons button').forEach(btn=>{
-      btn.addEventListener('click', ()=> {
-        showDay(btn.dataset.day);
-      });
-    });
-
-    function showDay(dayId){
-      // alle plan-tabellen ausblenden
-      document.querySelectorAll('#plan table').forEach(t => { t.style.display = 'none'; t.setAttribute('aria-hidden','true'); });
-      // alle day-buttons reset
-      document.querySelectorAll('.day-buttons button').forEach(b => b.classList.remove('active'));
-      // zeige die gewünschte tabelle
-      const table = document.getElementById(dayId);
-      if(table){ table.style.display = 'table'; table.setAttribute('aria-hidden','false'); }
-      // markiere passenden button
-      const btn = document.querySelector(`.day-buttons button[data-day="${dayId}"]`);
-      if(btn) btn.classList.add('active');
-      // Highlight Zeit in dieser Tabelle
-      highlightCurrentTime(dayId);
-    }
-
-    // Standard: Home anzeigen
-    // Wenn du möchtest, dass Plan beim Laden sichtbar ist, ruf openSection('plan') hier auf.
-    // openSection('plan');
-
-    /* ========== Routinen Modal ========== */
-    const modal = document.getElementById('routineModal');
-    const modalTitle = document.getElementById('routineTitle');
-    const modalList = document.getElementById('routineList');
-    const modalClose = document.getElementById('modalClose');
-
-    document.querySelectorAll('.routine-link').forEach(el=>{
-      el.addEventListener('click', (e)=>{
-        const key = e.currentTarget.dataset.routine;
-        if(!routines[key]) return;
-        modalTitle.textContent = routines[key].title;
-        modalList.innerHTML = routines[key].items.map(i=>`<li>${i}</li>`).join('');
-        modal.style.display = 'flex';
-        modal.setAttribute('aria-hidden','false');
-      });
-    });
-
-    modalClose.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e)=> { if(e.target === modal) closeModal(); });
-    function closeModal(){ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); }
-
-    /* ========== Zeit-Highlighting für aktive Zeile ========== */
-    function highlightCurrentTime(dayId){
-      const now = new Date();
-      const currentMinutes = now.getHours()*60 + now.getMinutes();
-
-      // Entferne aktive Klasse aus allen Zeilen der ausgewählten Tabelle
-      const rows = document.querySelectorAll(`#${dayId} tr`);
-      rows.forEach(r => r.classList.remove('active-time'));
-
-      rows.forEach(r=>{
-        const cell = r.cells[0];
-        if(!cell) return;
-        const text = cell.textContent.trim();
-        // match "HH:MM" or "HH:MM - HH:MM" or "HH:MM / HH:MM"
-        const m = text.match(/(\d{1,2}):(\d{2})(?:\s*[-\/]\s*(\d{1,2}):(\d{2}))?/);
-        if(!m) return;
-        const sh = parseInt(m[1],10), sm = parseInt(m[2],10);
-        const start = sh*60 + sm;
-        let end;
-        if(m[3]){
-          end = parseInt(m[3],10)*60 + parseInt(m[4],10);
-        } else {
-          end = start + 30; // Default 30min wenn nur eine Zeit steht
-        }
-        if(currentMinutes >= start && currentMinutes < end){
-          r.classList.add('active-time');
-        }
-      });
-    }
-
-    // Aktualisiere alle 60s die Hervorhebung (nur wenn Plan sichtbar & ein Tag aktiv)
-    setInterval(()=>{
-      if(plan.classList.contains('visible')){
-        const active = document.querySelector('.day-buttons button.active');
-        if(active) highlightCurrentTime(active.dataset.day);
-      }
-    }, 60_000);
-
-    /* ========== Schlafmodus (22:00 - 06:00) mit X oben rechts ========== */
-    const sleepOverlay = document.getElementById('sleepOverlay');
-    const starsContainer = sleepOverlay.querySelector('.stars');
-    const sleepCloseX = document.getElementById('sleepCloseX');
-
-    // Sterne generieren (position/animation random)
-    for(let i=0;i<120;i++){
-      const s = document.createElement('div');
-      s.classList.add('star');
-      // Zufällige Größe leicht variierend
-      const size = (Math.random()*2)+0.8;
-      s.style.width = size + 'px';
-      s.style.height = size + 'px';
-      s.style.top = (Math.random()*120 - 10) + '%'; // größerer Bereich für parallax
-      s.style.left = (Math.random()*120 - 10) + '%';
-      s.style.opacity = 0.6 + Math.random()*0.4;
-      s.style.animationDelay = (Math.random()*2) + 's';
-      s.style.animationDuration = (1.2 + Math.random()*2) + 's';
-      starsContainer.appendChild(s);
-    }
-
-    // Flag: wenn Benutzer das Overlay manuell geschlossen hat, wird es nicht automatisch wieder gezeigt (bis Reload)
-    let skipSleep = false;
-
-    function checkSleepTime(){
-      if(skipSleep) return;
-      const now = new Date();
-      const h = now.getHours();
-      const isSleepTime = (h >= 22 || h < 6);
-      if(isSleepTime){
-        sleepOverlay.style.display = 'flex';
-        sleepOverlay.setAttribute('aria-hidden','false');
-      } else {
-        sleepOverlay.style.display = 'none';
-        sleepOverlay.setAttribute('aria-hidden','true');
-      }
-    }
-
-    // Schließen per X: blendet Overlay aus und geht zur Startseite
-    sleepCloseX.addEventListener('click', ()=>{
-      skipSleep = true;
-      sleepOverlay.style.display = 'none';
-      sleepOverlay.setAttribute('aria-hidden','true');
-      // Zur Startseite wechseln
-      plan.classList.remove('visible');
-      training.classList.remove('visible');
-      home.style.display = 'flex';
-    });
-
-    // Beim Laden prüfen + jede Minute
-    checkSleepTime();
-    setInterval(checkSleepTime, 60_000);
-
-    /* ========== Accessibility / Fallback: Wenn Seite direkt geöffnet wird ========== */
-    // Standardmäßig zeigen wir die Startseite. Wenn du willst, dass Plan direkt offen ist, ruf openSection('plan') auf.
-
-    /* ========== Optional: Wenn Plan sichtbar sein soll beim Laden uncommenten: ========== */
-    // openSection('plan');
-
-  </script>
+  // Progressive enhancements: prefer-reduced-motion
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.querySelectorAll('*').forEach(el => { el.style.transition = 'none'; });
+  }
+</script>
 </body>
 </html>
