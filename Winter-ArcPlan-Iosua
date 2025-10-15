@@ -2,155 +2,160 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
   <title>Iosua — Winter Arc & Trainingsplan</title>
   <style>
-    /* Grundstil */
     :root {
       --accent: #1abc9c;
       --dark: #34495e;
       --bg: #f4f7fb;
     }
-    *{box-sizing:border-box}
-    body{
+    * { box-sizing: border-box; }
+    body {
       font-family: Arial, Helvetica, sans-serif;
-      margin:0;
+      margin: 0;
       background: linear-gradient(135deg,#dfe9f3 0%,#ffffff 100%);
-      color:#222;
-      min-height:100vh;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
+      color: #222;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
     }
 
     /* HOMEPAGE */
-    #home{
-      height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      flex-direction:column;
-      background:url('https://images.unsplash.com/photo-1608889175113-28e38a1e8c5b?auto=format&fit=crop&w=1600&q=60') center/cover no-repeat;
-      color:white;
+    #home {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex-direction: column;
+      background: url('https://images.unsplash.com/photo-1608889175113-28e38a1e8c5b?auto=format&fit=crop&w=1600&q=60') center/cover no-repeat;
+      color: white;
+      position: relative;
     }
-    #home h1{
-      font-size:3rem;
-      margin:0;
+    #home h1 {
+      font-size: 3rem;
+      margin: 0 10px;
       text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
     }
-    .home-buttons{
-      margin-top:28px;
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      justify-content:center;
+    .home-buttons {
+      margin-top: 28px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
-    .home-buttons button{
-      background:var(--accent);
-      color:white;
-      border:none;
-      padding:14px 28px;
-      border-radius:10px;
-      font-size:1.05rem;
-      cursor:pointer;
-      box-shadow:0 6px 18px rgba(0,0,0,0.2);
-      transition:transform .15s ease,background .15s ease;
+    .home-buttons button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+      transition: transform .15s ease, background .15s ease;
     }
-    .home-buttons button:hover{ transform:translateY(-3px); background:#16a085;}
+    .home-buttons button:hover { transform: translateY(-3px); background:#16a085; }
 
-    /* Sektionen */
-    .section{
-      display:none;
-      padding:26px;
-      min-height:100vh;
-      background:var(--bg);
-      position:relative;
+    /* SECTIONS */
+    .section {
+      display: none;
+      padding: 26px 10px 80px;
+      min-height: 100vh;
+      background: var(--bg);
+      position: relative;
     }
-    .visible{ display:block; }
+    .visible { display: block; }
 
-    h1.section-title{ text-align:center; color:var(--dark); margin-top:10px; margin-bottom:18px; }
+    h1.section-title { text-align: center; color: var(--dark); margin-top: 10px; margin-bottom: 18px; }
 
-    /* Zurück-Button */
-    .back-home{
-      position:absolute;
-      top:20px;
-      left:20px;
-      background:var(--dark);
-      color:white;
-      border:none;
-      border-radius:8px;
-      padding:8px 14px;
-      font-size:0.95rem;
-      cursor:pointer;
-      transition:background 0.2s;
-      z-index:50;
+    /* BACK BUTTON (fixed, always visible) */
+    .back-home {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      background: var(--dark);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      z-index: 10000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
     }
-    .back-home:hover{ background:#2c3e50; }
+    .back-home:hover { background: #2c3e50; }
 
-    /* Day buttons */
-    .day-buttons{
-      display:flex;
-      justify-content:center;
-      gap:10px;
-      margin-bottom:20px;
-      flex-wrap:wrap;
+    /* DAY BUTTONS */
+    .day-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
     }
-    .day-buttons button{
-      background:var(--dark);
-      color:white;
-      border:none;
-      padding:8px 14px;
-      border-radius:8px;
-      cursor:pointer;
-      font-size:0.95rem;
+    .day-buttons button {
+      background: var(--dark);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
     }
-    .day-buttons button.active{ background:var(--accent); }
+    .day-buttons button.active { background: var(--accent); }
 
-    /* Tabellen */
-    .table-wrap{ overflow-x:auto; }
-    table{
-      width:100%;
-      border-collapse:collapse;
-      margin:0 auto 28px;
-      background:white;
-      box-shadow:0 6px 18px rgba(0,0,0,0.06);
-      display:none;
-      min-width:320px;
+    /* TABLES */
+    .table-wrap { overflow-x: auto; padding-bottom: 20px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 auto 28px;
+      background: white;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      display: none;
+      min-width: 320px;
     }
-    th,td{ padding:12px; border:1px solid #e6e6e6; text-align:left; }
-    th{ background:var(--dark); color:white; }
-    tr:nth-child(even){ background:#fafafa; }
-    .day{ background:var(--dark); color:white; text-align:center; font-weight:700; font-size:1.05rem; }
+    th, td { padding: 12px; border: 1px solid #e6e6e6; text-align: left; }
+    th { background: var(--dark); color: white; }
+    tr:nth-child(even) { background: #fafafa; }
+    .day { background: var(--dark); color: white; text-align: center; font-weight: 700; font-size: 1.05rem; }
 
-    /* aktive Zeitzeile */
-    tr.active-time{ background:#d1f5d3 !important; font-weight:700; }
+    tr.active-time { background: #d1f5d3 !important; font-weight: 700; }
 
-    /* Modal (Routinen) */
-    .modal{
-      display:none;
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.55);
-      z-index:9999;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
+    /* ROUTINE LINKS */
+    .routine-link { color: #1abc9c; text-decoration: underline; cursor: pointer; }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
-    .modal .card{
-      background:white;
-      border-radius:10px;
-      padding:18px;
-      max-width:520px;
-      width:100%;
-      box-shadow:0 8px 30px rgba(0,0,0,0.2);
+    .modal .card {
+      background: white;
+      border-radius: 10px;
+      padding: 18px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
     }
-    .close-btn{ float:right; cursor:pointer; font-size:20px; color:#555; }
+    .close-btn {
+      float: right;
+      cursor: pointer;
+      font-size: 20px;
+      color: #555;
+    }
 
-    /* Trainings Tabelle */
-    #training table{ display:table; }
-    #training td{ vertical-align:top; }
-
-    /* Schlafmodus Overlay */
+    /* SCHLAF OVERLAY */
     #sleepOverlay {
       position: fixed;
       inset: 0;
@@ -166,7 +171,6 @@
       animation: fadeIn 800ms ease forwards;
       overflow: hidden;
     }
-
     #sleepOverlay .stars {
       position: absolute;
       width: 200%;
@@ -175,7 +179,6 @@
       top: -50%;
       z-index: 0;
     }
-
     .star {
       position: absolute;
       width: 2px;
@@ -185,60 +188,48 @@
       opacity: 0.8;
       animation: twinkle 2s infinite ease-in-out alternate;
     }
-
     @keyframes twinkle {
       from { opacity: 0.15; transform: scale(0.7); }
       to { opacity: 1; transform: scale(1.3); }
     }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .sleep-text { z-index: 2; text-shadow: 0 0 10px rgba(255,255,255,0.6); animation: float 6s ease-in-out infinite; }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .sleep-text {
-      position: relative;
-      z-index: 2;
-      text-shadow: 0 0 10px rgba(255,255,255,0.6);
-      animation: float 6s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    /* Close X oben rechts (weiß) */
+    /* FIXED X top-right (always visible) */
     #sleepCloseX {
-      position: absolute;
-      top: 12px;
+      position: fixed;
+      top: 14px;
       right: 16px;
       z-index: 21000;
       color: white;
-      font-size: 28px;
+      font-size: 32px;
       cursor: pointer;
-      line-height: 28px;
-      width: 44px;
-      height: 44px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border-radius:50%;
-      transition: transform .15s ease, background .15s ease;
+      line-height: 32px;
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(3px);
+      transition: transform .15s ease, color .15s ease;
       text-shadow: 0 0 10px rgba(255,255,255,0.4);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
     }
-    #sleepCloseX:hover { transform: scale(1.15); color: #1abc9c; }
+    #sleepCloseX:hover { transform: scale(1.2); color: #1abc9c; }
 
-    /* kleine Info unter Text */
-    .sleep-sub { font-size:0.8rem; opacity:0.9; margin-top:8px; z-index:2; }
+    .sleep-sub { font-size: 0.8rem; opacity: 0.9; margin-top: 8px; z-index: 2; }
 
-    @media (max-width:768px){
-      #home h1{ font-size:2rem; padding:0 20px; }
-      .home-buttons button{ padding:10px 18px; font-size:1rem; }
-      th,td{ padding:9px; font-size:14px; }
-      .day-buttons button{ padding:7px 10px; font-size:13px; }
-      #sleepOverlay { font-size:1.4rem; }
-      #sleepCloseX { font-size:24px; width:40px; height:40px; }
+    @media (max-width:768px) {
+      #home h1 { font-size: 2rem; padding: 0 20px; }
+      .home-buttons button { padding: 10px 20px; font-size: 1rem; }
+      .day-buttons button { padding: 6px 10px; font-size: 13px; }
+      th, td { padding: 9px; font-size: 14px; }
+      #sleepOverlay { font-size: 1.4rem; }
+      #sleepCloseX { font-size: 28px; width: 42px; height: 42px; }
+      .back-home { font-size: 0.85rem; padding: 8px 12px; top: 10px; left: 10px; }
     }
   </style>
 </head>
@@ -253,7 +244,7 @@
     </div>
   </div>
 
-  <!-- WINTER ARC PLAN (Sektion) -->
+  <!-- WINTER ARC PLAN -->
   <section id="plan" class="section" aria-hidden="true">
     <button class="back-home" id="backFromPlan">← Zurück zur Startseite</button>
     <h1 class="section-title">Winter Arc Plan</h1>
@@ -344,7 +335,7 @@
     </div>
   </section>
 
-  <!-- TRAINING (Sektion) -->
+  <!-- TRAINING (voller Plan wie gewünscht) -->
   <section id="training" class="section" aria-hidden="true">
     <button class="back-home" id="backFromTraining">← Zurück zur Startseite</button>
     <h1 class="section-title">Trainingsplan — Zuhause (4 Tage, Freitag Rest)</h1>
@@ -406,7 +397,7 @@
     </div>
   </div>
 
-  <!-- Schlafanimation Overlay -->
+  <!-- Schlafanimation Overlay + X oben rechts -->
   <div id="sleepOverlay" aria-hidden="true" role="dialog" aria-label="Schlafmodus">
     <div id="sleepCloseX" title="Zur Startseite">×</div>
     <div class="stars" aria-hidden="true"></div>
@@ -424,7 +415,7 @@
     const backFromPlan = document.getElementById('backFromPlan');
     const backFromTraining = document.getElementById('backFromTraining');
 
-    // Routinen (aus deinem ursprünglichen Objekt)
+    // Routinen
     const routines = {
       morning: {
         title: 'Morgenroutine',
@@ -479,7 +470,7 @@
       if(id === 'plan'){
         plan.classList.add('visible');
         plan.setAttribute('aria-hidden','false');
-        // beim Öffnen: wähle automatisch heutigen Tag (Mo-Fr) oder Montag bei WE
+        // Beim Öffnen: wähle automatisch heutigen Tag (Mo-Fr) oder Montag bei WE
         const days = ['sonntag','montag','dienstag','mittwoch','donnerstag','freitag','samstag'];
         const today = days[new Date().getDay()];
         const choose = ['montag','dienstag','mittwoch','donnerstag','freitag'].includes(today) ? today : 'montag';
@@ -491,7 +482,6 @@
     }
 
     function showHome(){
-      // hide sections, show home
       plan.classList.remove('visible');
       training.classList.remove('visible');
       plan.setAttribute('aria-hidden','true');
@@ -520,10 +510,6 @@
       // Highlight Zeit in dieser Tabelle
       highlightCurrentTime(dayId);
     }
-
-    // Standard: Home anzeigen
-    // Wenn du möchtest, dass Plan beim Laden sichtbar ist, ruf openSection('plan') hier auf.
-    // openSection('plan');
 
     /* ========== Routinen Modal ========== */
     const modal = document.getElementById('routineModal');
@@ -597,7 +583,7 @@
       const size = (Math.random()*2)+0.8;
       s.style.width = size + 'px';
       s.style.height = size + 'px';
-      s.style.top = (Math.random()*120 - 10) + '%'; // größerer Bereich für parallax
+      s.style.top = (Math.random()*120 - 10) + '%';
       s.style.left = (Math.random()*120 - 10) + '%';
       s.style.opacity = 0.6 + Math.random()*0.4;
       s.style.animationDelay = (Math.random()*2) + 's';
@@ -637,10 +623,7 @@
     checkSleepTime();
     setInterval(checkSleepTime, 60_000);
 
-    /* ========== Accessibility / Fallback: Wenn Seite direkt geöffnet wird ========== */
-    // Standardmäßig zeigen wir die Startseite. Wenn du willst, dass Plan direkt offen ist, ruf openSection('plan') auf.
-
-    /* ========== Optional: Wenn Plan sichtbar sein soll beim Laden uncommenten: ========== */
+    /* ========== Optional: Plan beim Laden anzeigen (auskommentiert standardmäßig) ========== */
     // openSection('plan');
 
   </script>
