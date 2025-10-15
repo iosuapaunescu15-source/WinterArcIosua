@@ -340,50 +340,53 @@
     <div class="table-wrap">
       <table aria-hidden="false">
         <tr><th>Tag</th><th>Training (Übungen, Sätze x WH)</th></tr>
-        <tr><td>Montag — Push & Schultern</td>
+        <tr><td>Montag — Stange-Tag (Calisthenics Fokus Rücken & Arme)</td>
             <td>
-              Aufwärmen 5–8 min (Seilspringen/leicht joggen)<br>
-              Liegestütze — 4 x 10–15<br>
-              Dips zwischen Stühlen — 3 x 8–12<br>
-              Hantel Schulterdrücken (stehend) — 3 x 8–12<br>
-              Pike Push-ups — 3 x 8–12<br>
-              Plank — 3 x 45–60s
+              Pull-ups – 4 × max (sauber, volle Range, ggf. negative Pull-ups)<br>
+              Chin-ups (Untergriff) – 3 × max<br>
+              Australian Rows – 3 × 10–12<br>
+              Hanging Knee Raises – 3 × 12<br>
+              Isometrisches Dead Hang – 2 × 20–30 Sek.<br>
+              🔹 Cooldown: 5 Minuten Schulterdehnung, Hang & Brust öffnen<br>
+              🔹 Optional: 10 Min Spaziergang am See
             </td></tr>
 
-        <tr><td>Dienstag — Beine & Core</td>
+        <tr><td>Dienstag — Restday (Aktiv)</td>
             <td>
-              Aufwärmen 5–8 min<br>
-              Kniebeugen (mit Hanteln / Goblet) — 4 x 12–20<br>
-              Ausfallschritte (gehend oder statisch) — 3 x 10–12 / Bein<br>
-              Rumänisches Kreuzheben mit Hanteln (leichtes Gewicht) — 3 x 10–12<br>
-              Wadenheben (einbeinig mit Hantel) — 4 x 15–20<br>
-              Bauch-Crunches / Leg Raises — 3 x 15–20
+              30–45 Min Spaziergang am See<br>
+              10 Min Mobility/Stretching: Hüfte öffnen, Schultern kreisen, Rücken- & Brustwirbelsäule dehnen<br>
+              Tipp: Leichtes Yoga oder Atemübung am Abend
             </td></tr>
 
-        <tr><td>Mittwoch — Pull & Bizeps</td>
+        <tr><td>Mittwoch — Stange + Core Power</td>
             <td>
-              Aufwärmen 5–8 min<br>
-              Klimmzüge (falls möglich) oder inverted rows / Handtuch-rows — 4 x 6–12<br>
-              Einarmiges Hantelrudern — 3 x 8–12 / Seite<br>
-              Hantel-Bizepscurls — 3 x 10–15<br>
-              Face Pulls mit Band (oder Rear Delt Raises) — 3 x 12–15<br>
-              Seitstütz — 3 x 30–45s / Seite
+              Pull-ups – 4 × max<br>
+              Dips an Bank / Geländer – 4 × 12<br>
+              L-Sit Hold – 3 × 15 Sek.<br>
+              Leg Raises – 3 × 15<br>
+              Plank to Push-up – 3 × 12<br>
+              🔥 Finisher: Push-up Ladder 1-2-3-4-5-4-3-2-1, 45 Sek Pause nach dem Zyklus
             </td></tr>
 
-        <tr><td>Donnerstag — Ganzkörper & Kondition (Zirkel)</td>
+        <tr><td>Donnerstag — Dumbbell Strength (2×4 kg)</td>
             <td>
-              3 Runden, 60–90s Pause zwischen den Runden:<br>
-              1) Burpees — 12–15<br>
-              2) Jump Squats — 15–20<br>
-              3) Liegestütze — 12–15<br>
-              4) Hantel-Swings (oder Romanian Deadlift) — 15<br>
-              5) Sit-ups — 20
+              Goblet Squats – 4 × 15<br>
+              Dumbbell Shoulder Press – 4 × 12<br>
+              Dumbbell Row – 3 × 12 pro Seite<br>
+              Biceps Curls + Hammer Curls – 3 × 10+10<br>
+              Dumbbell Lateral Raises – 3 × 15<br>
+              Russian Twists – 3 × 20 (10/10)<br>
+              🔥 Finisher: Dumbbell AMRAP 5 Minuten: 5 Push-ups, 10 Squats, 10 Dumbbell Rows (5/5)
             </td></tr>
 
-        <tr><td>Freitag — Restday</td>
-            <td>Leichtes Stretching / Mobility 15–25min, Spaziergang, Regeneration</td></tr>
+        <tr><td>Freitag — Restday (Aktiv)</td>
+            <td>
+              30–60 Min Spaziergang oder lockeres Fahrradfahren<br>
+              15 Min Mobility/Stretch (Beine + Schultern)<br>
+              Fokus: Erholung, Wasser trinken, Ernährung on point
+            </td></tr>
       </table>
-    </div>
+</div>
   </section>
 
   <!-- Modal für Routinen -->
@@ -456,7 +459,6 @@
     btnTraining.addEventListener('click', ()=> openSection('training'));
     backFromPlan.addEventListener('click', showHome);
     backFromTraining.addEventListener('click', showHome);
-
     function openSection(id){
       // show chosen section, hide others
       home.style.display = 'none';
@@ -476,10 +478,12 @@
       } else if(id === 'training'){
         training.classList.add('visible');
         training.setAttribute('aria-hidden','false');
+        // Show the training table
+        document.querySelector('#training table').style.display = 'table';
+        document.querySelector('#training table').setAttribute('aria-hidden','false');
       }
     }
-
-    function showHome(){
+function showHome(){
       plan.classList.remove('visible');
       training.classList.remove('visible');
       plan.setAttribute('aria-hidden','true');
