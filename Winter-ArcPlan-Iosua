@@ -18,6 +18,8 @@
       background: linear-gradient(135deg,#dfe9f3 0%,#ffffff 100%);
       color:#222;
       min-height:100vh;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
 
     /* HOMEPAGE */
@@ -62,30 +64,28 @@
       padding:26px;
       min-height:100vh;
       background:var(--bg);
+      position:relative;
     }
     .visible{ display:block; }
 
     h1.section-title{ text-align:center; color:var(--dark); margin-top:10px; margin-bottom:18px; }
 
-    /* Top-Buttons innerhalb Sektion */
-    .top-switch{
-      display:flex;
-      justify-content:center;
-      gap:12px;
-      margin-bottom:18px;
-      flex-wrap:wrap;
-    }
-    .top-switch button{
+    /* Zurück-Button */
+    .back-home{
+      position:absolute;
+      top:20px;
+      left:20px;
       background:var(--dark);
       color:white;
       border:none;
-      padding:10px 16px;
       border-radius:8px;
+      padding:8px 14px;
+      font-size:0.95rem;
       cursor:pointer;
-      transition:background .12s;
+      transition:background 0.2s;
+      z-index:50;
     }
-    .top-switch button:hover{ background:#2c3e50; }
-    .top-switch .active{ background:var(--accent); }
+    .back-home:hover{ background:#2c3e50; }
 
     /* Day buttons */
     .day-buttons{
@@ -125,13 +125,13 @@
     /* aktive Zeitzeile */
     tr.active-time{ background:#d1f5d3 !important; font-weight:700; }
 
-    /* Modal */
+    /* Modal (Routinen) */
     .modal{
       display:none;
       position:fixed;
       inset:0;
       background:rgba(0,0,0,0.55);
-      z-index:999;
+      z-index:9999;
       align-items:center;
       justify-content:center;
       padding:20px;
@@ -150,12 +150,95 @@
     #training table{ display:table; }
     #training td{ vertical-align:top; }
 
-    /* Responsiv */
+    /* Schlafmodus Overlay */
+    #sleepOverlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 20% 30%, #00111a 0%, #000814 70%);
+      z-index: 20000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: white;
+      font-size: 2rem;
+      text-align: center;
+      animation: fadeIn 800ms ease forwards;
+      overflow: hidden;
+    }
+
+    #sleepOverlay .stars {
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      left: -50%;
+      top: -50%;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite ease-in-out alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.15; transform: scale(0.7); }
+      to { opacity: 1; transform: scale(1.3); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .sleep-text {
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 0 10px rgba(255,255,255,0.6);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Close X oben rechts (weiß) */
+    #sleepCloseX {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      z-index: 21000;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      line-height: 28px;
+      width: 44px;
+      height: 44px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:50%;
+      transition: transform .15s ease, background .15s ease;
+      text-shadow: 0 0 10px rgba(255,255,255,0.4);
+    }
+    #sleepCloseX:hover { transform: scale(1.15); color: #1abc9c; }
+
+    /* kleine Info unter Text */
+    .sleep-sub { font-size:0.8rem; opacity:0.9; margin-top:8px; z-index:2; }
+
     @media (max-width:768px){
       #home h1{ font-size:2rem; padding:0 20px; }
       .home-buttons button{ padding:10px 18px; font-size:1rem; }
       th,td{ padding:9px; font-size:14px; }
       .day-buttons button{ padding:7px 10px; font-size:13px; }
+      #sleepOverlay { font-size:1.4rem; }
+      #sleepCloseX { font-size:24px; width:40px; height:40px; }
     }
   </style>
 </head>
@@ -171,7 +254,8 @@
   </div>
 
   <!-- WINTER ARC PLAN (Sektion) -->
-  <section id="plan" class="section">
+  <section id="plan" class="section" aria-hidden="true">
+    <button class="back-home" id="backFromPlan">← Zurück zur Startseite</button>
     <h1 class="section-title">Winter Arc Plan</h1>
 
     <div class="day-buttons" role="tablist" aria-label="Wochentage">
@@ -261,7 +345,8 @@
   </section>
 
   <!-- TRAINING (Sektion) -->
-  <section id="training" class="section">
+  <section id="training" class="section" aria-hidden="true">
+    <button class="back-home" id="backFromTraining">← Zurück zur Startseite</button>
     <h1 class="section-title">Trainingsplan — Zuhause (4 Tage, Freitag Rest)</h1>
     <div class="table-wrap">
       <table aria-hidden="false">
@@ -321,15 +406,25 @@
     </div>
   </div>
 
+  <!-- Schlafanimation Overlay -->
+  <div id="sleepOverlay" aria-hidden="true" role="dialog" aria-label="Schlafmodus">
+    <div id="sleepCloseX" title="Zur Startseite">×</div>
+    <div class="stars" aria-hidden="true"></div>
+    <div class="sleep-text">😴 Schlaf gut, Iosua 🌙</div>
+    <div class="sleep-sub">Automatisch sichtbar zwischen 22:00 und 06:00</div>
+  </div>
+
   <script>
-    // DOM-Elemente
+    /* ========== DOM-Elemente & Daten ========== */
     const home = document.getElementById('home');
     const plan = document.getElementById('plan');
     const training = document.getElementById('training');
     const btnPlan = document.getElementById('btn-plan');
     const btnTraining = document.getElementById('btn-training');
+    const backFromPlan = document.getElementById('backFromPlan');
+    const backFromTraining = document.getElementById('backFromTraining');
 
-    // Routinen
+    // Routinen (aus deinem ursprünglichen Objekt)
     const routines = {
       morning: {
         title: 'Morgenroutine',
@@ -367,27 +462,44 @@
       }
     };
 
-    // Navigation von Homepage zu Sektionen
+    /* ========== Navigation ========== */
     btnPlan.addEventListener('click', ()=> openSection('plan'));
     btnTraining.addEventListener('click', ()=> openSection('training'));
+    backFromPlan.addEventListener('click', showHome);
+    backFromTraining.addEventListener('click', showHome);
 
     function openSection(id){
+      // show chosen section, hide others
       home.style.display = 'none';
       plan.classList.remove('visible');
       training.classList.remove('visible');
+      plan.setAttribute('aria-hidden','true');
+      training.setAttribute('aria-hidden','true');
+
       if(id === 'plan'){
         plan.classList.add('visible');
+        plan.setAttribute('aria-hidden','false');
         // beim Öffnen: wähle automatisch heutigen Tag (Mo-Fr) oder Montag bei WE
         const days = ['sonntag','montag','dienstag','mittwoch','donnerstag','freitag','samstag'];
         const today = days[new Date().getDay()];
         const choose = ['montag','dienstag','mittwoch','donnerstag','freitag'].includes(today) ? today : 'montag';
         showDay(choose);
-      } else {
+      } else if(id === 'training'){
         training.classList.add('visible');
+        training.setAttribute('aria-hidden','false');
       }
     }
 
-    // Day-Buttons click handler (delegation)
+    function showHome(){
+      // hide sections, show home
+      plan.classList.remove('visible');
+      training.classList.remove('visible');
+      plan.setAttribute('aria-hidden','true');
+      training.setAttribute('aria-hidden','true');
+      home.style.display = 'flex';
+    }
+
+    /* ========== Day-Buttons & Table Anzeige ========== */
     document.querySelectorAll('.day-buttons button').forEach(btn=>{
       btn.addEventListener('click', ()=> {
         showDay(btn.dataset.day);
@@ -409,7 +521,11 @@
       highlightCurrentTime(dayId);
     }
 
-    // Routinen modal
+    // Standard: Home anzeigen
+    // Wenn du möchtest, dass Plan beim Laden sichtbar ist, ruf openSection('plan') hier auf.
+    // openSection('plan');
+
+    /* ========== Routinen Modal ========== */
     const modal = document.getElementById('routineModal');
     const modalTitle = document.getElementById('routineTitle');
     const modalList = document.getElementById('routineList');
@@ -430,7 +546,7 @@
     modal.addEventListener('click', (e)=> { if(e.target === modal) closeModal(); });
     function closeModal(){ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); }
 
-    // Zeit-Highlighting (funktioniert für alle Plan-Tabellen)
+    /* ========== Zeit-Highlighting für aktive Zeile ========== */
     function highlightCurrentTime(dayId){
       const now = new Date();
       const currentMinutes = now.getHours()*60 + now.getMinutes();
@@ -443,7 +559,7 @@
         const cell = r.cells[0];
         if(!cell) return;
         const text = cell.textContent.trim();
-        // match "HH:MM" or "HH:MM - HH:MM" or "HH:MM / HH:MM" (robust)
+        // match "HH:MM" or "HH:MM - HH:MM" or "HH:MM / HH:MM"
         const m = text.match(/(\d{1,2}):(\d{2})(?:\s*[-\/]\s*(\d{1,2}):(\d{2}))?/);
         if(!m) return;
         const sh = parseInt(m[1],10), sm = parseInt(m[2],10);
@@ -468,12 +584,65 @@
       }
     }, 60_000);
 
-    // Sicherheit: falls jemand direkt die Seite öffnet (nicht von Home), zeig Home
-    // (Kein automatisches Öffnen)
-    // (Optional: du könntest direkt openSection('plan') aufrufen)
+    /* ========== Schlafmodus (22:00 - 06:00) mit X oben rechts ========== */
+    const sleepOverlay = document.getElementById('sleepOverlay');
+    const starsContainer = sleepOverlay.querySelector('.stars');
+    const sleepCloseX = document.getElementById('sleepCloseX');
 
-    // Accessibility / initial: zeige Home (default)
-    // (Wenn du willst, dass Plan direkt beim Laden gezeigt wird, ruf openSection('plan') hier auf)
+    // Sterne generieren (position/animation random)
+    for(let i=0;i<120;i++){
+      const s = document.createElement('div');
+      s.classList.add('star');
+      // Zufällige Größe leicht variierend
+      const size = (Math.random()*2)+0.8;
+      s.style.width = size + 'px';
+      s.style.height = size + 'px';
+      s.style.top = (Math.random()*120 - 10) + '%'; // größerer Bereich für parallax
+      s.style.left = (Math.random()*120 - 10) + '%';
+      s.style.opacity = 0.6 + Math.random()*0.4;
+      s.style.animationDelay = (Math.random()*2) + 's';
+      s.style.animationDuration = (1.2 + Math.random()*2) + 's';
+      starsContainer.appendChild(s);
+    }
+
+    // Flag: wenn Benutzer das Overlay manuell geschlossen hat, wird es nicht automatisch wieder gezeigt (bis Reload)
+    let skipSleep = false;
+
+    function checkSleepTime(){
+      if(skipSleep) return;
+      const now = new Date();
+      const h = now.getHours();
+      const isSleepTime = (h >= 22 || h < 6);
+      if(isSleepTime){
+        sleepOverlay.style.display = 'flex';
+        sleepOverlay.setAttribute('aria-hidden','false');
+      } else {
+        sleepOverlay.style.display = 'none';
+        sleepOverlay.setAttribute('aria-hidden','true');
+      }
+    }
+
+    // Schließen per X: blendet Overlay aus und geht zur Startseite
+    sleepCloseX.addEventListener('click', ()=>{
+      skipSleep = true;
+      sleepOverlay.style.display = 'none';
+      sleepOverlay.setAttribute('aria-hidden','true');
+      // Zur Startseite wechseln
+      plan.classList.remove('visible');
+      training.classList.remove('visible');
+      home.style.display = 'flex';
+    });
+
+    // Beim Laden prüfen + jede Minute
+    checkSleepTime();
+    setInterval(checkSleepTime, 60_000);
+
+    /* ========== Accessibility / Fallback: Wenn Seite direkt geöffnet wird ========== */
+    // Standardmäßig zeigen wir die Startseite. Wenn du willst, dass Plan direkt offen ist, ruf openSection('plan') auf.
+
+    /* ========== Optional: Wenn Plan sichtbar sein soll beim Laden uncommenten: ========== */
+    // openSection('plan');
+
   </script>
 </body>
 </html>
